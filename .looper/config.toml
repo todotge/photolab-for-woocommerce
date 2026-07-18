@@ -1,0 +1,4 @@
+# Photolab for WooCommerce — Looper configuration
+# Update ~/.looper/config.toml workingDirectory to point here if using as primary repo.
+# For parallel operation with the working repo, create a separate daemon instance.
+working_directory = "/media/luke/TODOT/pubblication/photolab"

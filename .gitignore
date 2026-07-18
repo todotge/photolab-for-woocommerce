@@ -1,0 +1,11 @@
+node_modules
+vendor
+graphify-out
+*.zip
+*.phar
+.DS_Store
+*.log
+.env
+.phpunit.result.cache
+.phpunit.cache
+composer.lock

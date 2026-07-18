@@ -1,0 +1,50 @@
+version: 2
+updates:
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Rome"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    ignore:
+      - dependency-name: "phpunit/phpunit"
+        versions: ["11.x", "12.x"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Rome"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 3
+    ignore:
+      - dependency-name: "tailwindcss"
+        versions: ["4.x", "5.x"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Rome"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "chore"
+      include: "scope"

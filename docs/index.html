@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Photolab for WooCommerce — Sell photos at scale. Bulk upload, automatic watermarking, multi-domain galleries. Free, open-source.">
+<title>Photolab for WooCommerce — Sell Photos at Scale</title>
+<style>
+/* === RESET === */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-body);line-height:1.6;overflow-x:hidden}
+
+/* === FONT === */
+@font-face{font-family:'Gobold';src:url('assets/Gobold Bold Italic.otf') format('opentype');font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:'Gobold';src:url('assets/Gobold Bold.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
+
+/* === TOKENS === */
+:root{
+  --bg-primary:#125250;
+  --bg-secondary:#0d3d3b;
+  --bg-gradient:linear-gradient(180deg,#145250 0%,#0f3d3b 20%,#0f3d3b 50%,#0f3d3b 80%,#145250 100%);
+  --bg-card:rgba(255,255,255,0.04);
+  --bg-card-hover:rgba(255,255,255,0.07);
+  --accent:#93fbf7;
+  --accent-blue:#0693e3;
+  --accent-teal:#125250;
+  --text-primary:#fff;
+  --text-secondary:rgba(255,255,255,0.65);
+  --text-tertiary:rgba(255,255,255,0.40);
+  --border:rgba(255,255,255,0.08);
+  --glass-bg:rgba(255,255,255,0.04);
+  --glass-border:rgba(255,255,255,0.06);
+  --radius:12px;
+  --radius-lg:20px;
+  --font-heading:'Gobold',system-ui,sans-serif;
+  --font-body:Arial,sans-serif;
+  --max-width:1200px;
+}
+
+/* === UTILITY === */
+.container{width:100%;max-width:var(--max-width);margin:0 auto;padding:0 24px}
+.section{padding:100px 0}
+.section-label{display:inline-block;color:var(--accent);font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:12px}
+.section-title{font-family:var(--font-heading);font-style:italic;text-transform:uppercase;font-size:clamp(2rem,4vw,3.2rem);line-height:1.25;margin-bottom:20px}
+.section-subtitle{color:var(--text-secondary);font-size:1.1rem;max-width:600px;margin-bottom:48px}
+
+/* === BUTTONS === */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--radius);font-family:var(--font-heading);font-style:italic;text-transform:uppercase;font-size:0.9rem;text-decoration:none;cursor:pointer;border:none;transition:all 0.2s}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:#00e896;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,208,132,0.3)}
+.btn-outline{background:transparent;color:var(--text-primary);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--text-secondary);background:rgba(255,255,255,0.04)}
+.btn-lg{padding:18px 36px;font-size:1rem}
+
+/* === NAV === */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,48,46,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:16px 0;transition:background 0.3s}
+#nav .container{display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:flex-end;gap:10px;text-decoration:none;color:var(--text-primary);position:relative;}
+.nav-logo img{height:28px;width:auto}
+.nav-logo span{font-family:var(--font-heading);text-transform:uppercase;font-size:1.2rem}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{font-family:var(--font-heading);font-style:normal;text-transform:uppercase;color:var(--text-primary);text-decoration:none;font-size:0.9rem;transition:color 0.2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta .btn{padding:10px 22px;font-size:0.85rem}
+.nav-logo::after {content:"for WooCommerce";font-size:10px;color:white;height: 20px;padding: 0px;margin-bottom: -7px;position:absolute;bottom:0;right: -90px;}
+/* Solutions Dropdown */
+.dropdown{position:relative}
+.dropdown-toggle{cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-heading);font-style:normal;text-transform:uppercase;color:var(--text-primary);font-size:0.9rem;transition:color 0.2s}
+.dropdown-toggle:hover{color:var(--accent)}
+.dropdown-toggle::after{content:'';display:inline-block;width:8px;height:8px;border-right:1.5px solid var(--text-primary);border-bottom:1.5px solid var(--text-primary);transform:rotate(45deg);margin-top:-2px;transition:transform 0.2s}
+.dropdown:hover .dropdown-toggle::after{transform:rotate(-135deg);margin-top:2px}
+.dropdown:hover .dropdown-toggle{color:var(--accent)}
+.dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:12px;background:rgba(13,61,59,0.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--radius);padding:10px;min-width:420px;display:grid;grid-template-columns:1fr 1fr;gap:4px;opacity:0;visibility:hidden;transition:all 0.2s}
+.dropdown:hover .dropdown-menu{opacity:1;visibility:visible}
+.dropdown-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;font-size:0.85rem;font-family:var(--font-body);text-transform:none;color:var(--text-secondary)!important;text-decoration:none;transition:all 0.15s}
+.dropdown-menu a:hover{background:rgba(255,255,255,0.06);color:var(--text-primary)!important}
+.dropdown-menu .soon{opacity:0.4;pointer-events:none}
+.dropdown-menu .badge{font-size:0.65rem;background:var(--accent);color:#000;padding:2px 6px;border-radius:4px;font-weight:600;margin-left:auto}
+
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;z-index:101}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text-primary);transition:all 0.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,48,46,0.98);z-index:99;flex-direction:column;justify-content:center;align-items:center;gap:20px;overflow-y:auto;padding:40px 20px}
+.mobile-menu.active{display:flex}
+.mobile-menu a{color:var(--text-primary);font-size:1.2rem;text-decoration:none;font-family:var(--font-heading);text-transform:uppercase}
+.mobile-menu .soon{color:var(--text-tertiary)}
+.mobile-menu .sub{font-size:0.9rem;color:var(--text-secondary);font-family:var(--font-body)}
+.mobile-menu .btn{margin-top:16px}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .hamburger{display:flex}
+  .nav-logo img { height: 20px;}
+}
+
+/* === HERO === */
+#hero{padding:230px 0 230px;position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(0,208,132,0.06),transparent 70%);border-radius:50%;pointer-events:none}
+#hero .container{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-visual{order:1}
+.hero-content{order:2;max-width:560px}
+.hero-content h1{font-family:var(--font-heading);font-style:italic;text-transform:uppercase;font-size:clamp(2.5rem,5vw,4rem);line-height:1.18;margin-bottom:24px}
+.hero-content h1 span{color:var(--accent)}
+.hero-tagline{color:var(--accent);font-size:1rem;font-style:italic;margin-bottom:8px;opacity:0.9}
+.hero-brand{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.hero-brand img{width:150px;height:auto;filter:brightness(0) invert(1);opacity:0.9}
+.hero-brand-name{font-family:var(--font-body);font-size:1.6rem;font-weight:700;color:var(--text-primary);letter-spacing:0.02em}
+.hero-content p{color:var(--text-secondary);font-size:1.15rem;margin-bottom:36px;max-width:480px;}
+.hero-content p.hero-tagline{font-size:1rem;margin-bottom:8px}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.hero-visual img{width:100%;max-width:560px;display:block;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.5));transform:scale(2.3) translatex(-30%);height:auto}
+
+@media(max-width:768px){
+  #hero{padding:120px 0 60px}
+  #hero .container{grid-template-columns:1fr;text-align:center}
+  .hero-visual{order:1;margin-bottom:32px}
+  .hero-content{order:2;margin:0 auto}
+  .hero-content p{margin-left:auto;margin-right:auto}
+  .hero-actions{justify-content:center}
+  .hero-visual img{max-width:300px;margin:0 auto}
+.hero-visual img{width:100%;max-width:560px;display:block;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.5));transform:scale(1.6);height:auto}
+}
+
+/* === FEATURES === */
+#features{background:linear-gradient(180deg,#0f3d3b 80%,#145250 100%);;padding:140px 0}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature-card{background:var(--bg-card);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:32px 28px;transition:all 0.3s}
+.feature-card:hover{background:var(--bg-card-hover);transform:translateY(-2px);border-color:var(--border)}
+.feature-icon{width:48px;height:48px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;background:rgba(0,208,132,0.1);border-radius:var(--radius)}
+.feature-icon svg{width:24px;height:24px;stroke:var(--accent)}
+.feature-icon-img{width:48px;height:48px;margin-bottom:20px;object-fit:contain;border-radius:var(--radius)}
+.feature-card h3{font-family:var(--font-heading);font-style:normal;text-transform:uppercase;font-size:1.1rem;margin-bottom:10px}
+.feature-card p{color:var(--text-secondary);font-size:0.9rem;line-height:1.6}
+
+@media(max-width:900px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.features-grid{grid-template-columns:1fr}}
+
+/* === HOW IT WORKS === */
+#how{position:relative}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;counter-reset:step}
+.step-card{position:relative;text-align:center;padding:40px 24px;background:var(--bg-card);border:1px solid var(--glass-border);border-radius:var(--radius-lg)}
+.step-card::before{display:none}
+.step-icon{width:56px;height:56px;margin:0 auto 20px;object-fit:contain}
+.step-card h3{font-family:var(--font-heading);font-style:normal;text-transform:uppercase;font-size:1.15rem;margin-bottom:10px}
+.step-card p{color:var(--text-secondary);font-size:0.9rem}
+
+@media(max-width:700px){.steps{grid-template-columns:1fr}}
+
+/* === REVENUE MODELS === */
+#revenue{background:var(--bg-gradient);padding:140px 0}
+.revenue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.revenue-card{text-align:center;padding:36px 20px;background:var(--bg-card);border:1px solid var(--glass-border);border-radius:var(--radius-lg);transition:all 0.3s}
+.revenue-card:hover{background:var(--bg-card-hover);transform:translateY(-2px)}
+.revenue-card .r-icon{width:56px;height:56px;margin:0 auto 16px;display:block;object-fit:contain}
+.revenue-card h3{font-family:var(--font-heading);font-style:normal;text-transform:uppercase;font-size:1rem;margin-bottom:8px}
+.revenue-card p{color:var(--text-secondary);font-size:0.85rem}
+
+@media(max-width:900px){.revenue-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.revenue-grid{grid-template-columns:1fr}}
+
+/* === RESULTS === */
+#results{background:linear-gradient(180deg,transparent 0%,rgba(0,208,132,0.03) 50%,transparent 100%)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+.stat-item .stat-number{font-family:var(--font-heading);font-style:italic;text-transform:uppercase;font-size:clamp(2rem,4vw,3rem);color:var(--accent);display:block}
+.stat-item .stat-label{color:var(--text-secondary);font-size:0.9rem;margin-top:8px}
+
+@media(max-width:700px){.stats-grid{grid-template-columns:repeat(2,1fr);gap:40px}}
+
+/* === PRICING === */
+#pricing{background:var(--bg-gradient);padding:200px 0 140px 0}
+.pricing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;max-width:860px;margin:0 auto}
+.pricing-card{background:var(--bg-card);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:40px 32px;display:flex;flex-direction:column}
+.pricing-card.featured{border-color:var(--accent);position:relative}
+.pricing-card.featured::before{content:'Best Value';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;font-size:0.7rem;font-weight:700;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:0.05em}
+.pricing-name{font-family:var(--font-heading);font-style:normal;text-transform:uppercase;font-size:1.3rem;margin-bottom:8px}
+.pricing-price{font-family:var(--font-heading);font-style:normal;text-transform:uppercase;font-size:2.2rem;margin-bottom:24px}
+.pricing-price small{font-size:1rem;color:var(--text-secondary);font-weight:400}
+.pricing-features{list-style:none;margin-bottom:32px;flex:1}
+.pricing-features li{padding:8px 0;color:var(--text-secondary);font-size:0.9rem;display:flex;align-items:flex-start;gap:10px}
+.pricing-features li::before{content:'\2713';color:var(--accent);font-weight:700;flex-shrink:0}
+.pricing-card .btn{width:100%;justify-content:center}
+@media(max-width:650px){.pricing-grid{grid-template-columns:1fr}}
+
+/* === DOWNLOAD CTA === */
+#download .cta-card{max-width:800px;margin:0 auto;background:var(--bg-card);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:48px 40px;text-align:center}
+.cta-card h2{font-family:var(--font-heading);font-style:italic;text-transform:uppercase;font-size:clamp(1.5rem,3vw,2rem);margin-bottom:12px}
+.cta-card .cta-sub{color:var(--text-secondary);margin-bottom:32px;font-size:0.95rem}
+.email-form{display:flex;gap:10px;margin-bottom:16px}
+.email-form input{flex:1;padding:14px 18px;border-radius:var(--radius);border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--text-primary);font-size:0.95rem;font-family:var(--font-body);transition:border-color 0.2s}
+.email-form input::placeholder{color:var(--text-tertiary)}
+.email-form input:focus{outline:none;border-color:var(--accent)}
+.toggle-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px}
+.toggle-switch{position:relative;width:44px;height:24px;cursor:pointer}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:rgba(255,255,255,0.12);border-radius:24px;transition:background 0.3s}
+.toggle-slider::before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:transform 0.3s}
+.toggle-switch input:checked+.toggle-slider{background:var(--accent)}
+.toggle-switch input:checked+.toggle-slider::before{transform:translateX(20px)}
+.toggle-label{color:var(--text-secondary);font-size:0.85rem}
+.discount-note{color:var(--text-tertiary);font-size:0.8rem;margin-top:16px}
+.success-msg{display:none;color:var(--accent);font-size:0.9rem;margin-top:16px;padding:12px;background:rgba(0,208,132,0.08);border-radius:var(--radius)}
+.success-msg.show{display:block}
+
+@media(max-width:500px){
+  .email-form{flex-direction:column}
+  .email-form .btn{width:100%}
+}
+
+/* === FOOTER === */
+#footer{padding:80px 0 30px;border-top:1px solid var(--border);background:#0f3d3b}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-col h4{font-family:var(--font-heading);text-transform:uppercase;font-size:0.95rem;margin-bottom:20px}
+.footer-col a,.footer-col p{display:block;color:var(--text-secondary);text-decoration:none;font-size:0.85rem;margin-bottom:10px;transition:color 0.2s}
+.footer-col a:hover{color:var(--text-primary)}
+.footer-bottom{text-align:center;padding-top:30px;border-top:1px solid var(--border)}
+.footer-bottom p{color:var(--text-tertiary);font-size:0.8rem}
+
+@media(max-width:650px){.footer-grid{grid-template-columns:1fr;gap:30px}}
+
+/* === SCROLL ANIMATIONS === */
+.animate{opacity:0;transform:translateY(30px);transition:all 0.6s ease-out}
+.animate.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ====== NAV ====== -->
+<nav id="nav">
+  <div class="container">
+    <a href="#" class="nav-logo">
+      <img src="assets/icons/logo.svg" alt="Photolab" width="28" height="28">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li class="dropdown" id="solutionsDropdown">
+        <span class="dropdown-toggle" id="dropdownToggle">Solutions</span>
+        <div class="dropdown-menu">
+          <a href="#multidomain">Centralized Multidomain</a>
+          <a href="#pro">Photolab Pro</a>
+          <a href="#" class="soon">Face Recognition <span class="badge">soon</span></a>
+          <a href="#" class="soon">WordPress Theme <span class="badge">soon</span></a>
+          <a href="#" class="soon">AI Editor <span class="badge">soon</span></a>
+          <a href="#" class="soon">AI Enchanter <span class="badge">soon</span></a>
+        </div>
+      </li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#download" class="btn btn-primary">Download Free</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features">Features</a>
+  <a href="#how">How It Works</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#multidomain" class="sub">Centralized Multidomain</a>
+  <a href="#pro" class="sub">Photolab Pro</a>
+  <span class="soon">Face Recognition (coming soon)</span>
+  <span class="soon">WordPress Theme (coming soon)</span>
+  <span class="soon">AI Editor (coming soon)</span>
+  <span class="soon">AI Enchanter (coming soon)</span>
+  <a href="#download" class="btn btn-primary">Download Free</a>
+</div>
+
+<!-- ====== HERO ====== -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-visual">
+      <img src="assets/tablet-photolab.png" alt="Photolab product gallery on tablet" width="560" height="400">
+    </div>
+    <div class="hero-content">
+      <p class="section-label" style="color:#93fbf7;font-size:0.8rem;">The WooCommerce photo sales engine</p>
+      <h1>Sell Photos <br><span>at Scale.</span><br>Automatically.</h1>
+      <p>The open-source WooCommerce plugin that turns every photo into a product. Automatic watermarking, self-healing uploads, and multi-domain management included.</p>
+      <div class="hero-actions">
+        <a href="#download" class="btn btn-primary btn-lg">Get Photolab Free</a>
+        <a href="#how" class="btn btn-outline btn-lg">See How It Works</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FEATURES ====== -->
+<section id="features" class="section">
+  <div class="container">
+    <span class="section-label">Features</span>
+    <h2 class="section-title">Everything You Need to Sell Photos</h2>
+    <p class="section-subtitle">Photolab handles the entire pipeline &mdash; from upload to watermark to WooCommerce product &mdash; so you don't have to.</p>
+    <div class="features-grid">
+
+      <div class="feature-card animate">
+        <img src="assets/icons/bulk-upload.png" alt="" class="feature-icon-img" width="48" height="48" loading="lazy">
+        <h3>Bulk Upload, Zero Friction</h3>
+        <p>Upload 2,000+ photos per album in chunks of 5. SHA-256 deduplication catches duplicates before they hit your server.</p>
+      </div>
+
+      <div class="feature-card animate">
+        <img src="assets/icons/auto-watermark.png" alt="" class="feature-icon-img" width="48" height="48" loading="lazy">
+        <h3>Automatic Watermarking</h3>
+        <p>Imagick-powered compositing with GD fallback. Full-width or corner positions. Originals stay full resolution, protected.</p>
+      </div>
+
+      <div class="feature-card animate">
+        <img src="assets/icons/wc-integration.png" alt="" class="feature-icon-img" width="48" height="48" loading="lazy">
+        <h3>WooCommerce Native Products</h3>
+        <p>Each photo becomes a Simple, Virtual, Downloadable product. Categories per album. Featured images set. Downloads point to originals.</p>
+      </div>
+
+      <div class="feature-card animate">
+        <img src="assets/icons/protected-originals.png" alt="" class="feature-icon-img" width="48" height="48" loading="lazy">
+        <h3>Protected Originals, Secure Delivery</h3>
+        <p>.htaccess denies direct access to originals. Download Guard blocks purchases until watermarked. Full-resolution only after payment.</p>
+      </div>
+
+      <div class="feature-card animate">
+        <img src="assets/icons/self-healing.png" alt="" class="feature-icon-img" width="48" height="48" loading="lazy">
+        <h3>Self-Healing Pipeline</h3>
+        <p>Finite State Machine with CAS prevents race conditions. Stuck uploads auto-abort. Failed watermarks retry. Recovery cron every 5 minutes.</p>
+      </div>
+
+      <div class="feature-card animate">
+        <img src="assets/icons/multidomain.png" alt="" class="feature-icon-img" width="48" height="48" loading="lazy">
+        <h3>Multi-Domain Centralized</h3>
+        <p>Manage galleries across unlimited WordPress sites from one dashboard. Remote upload, delete, reset. Native REST API, no satellite modifications.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== HOW IT WORKS ====== -->
+<section id="how" class="section">
+  <div class="container">
+    <span class="section-label">How It Works</span>
+    <h2 class="section-title">Three Steps to Selling Photos</h2>
+    <p class="section-subtitle">No complex setup. No manual product creation. Just upload, watermark, and sell.</p>
+    <div class="steps">
+      <div class="step-card animate">
+        <img src="assets/icons/how-upload.png" alt="" class="step-icon" width="56" height="56" loading="lazy">
+        <h3>Upload</h3>
+        <p>Select your photos. Set album name and price. The plugin handles chunking, validation, and deduplication automatically.</p>
+      </div>
+      <div class="step-card animate">
+        <img src="assets/icons/how-watermark.png" alt="" class="step-icon" width="56" height="56" loading="lazy">
+        <h3>Watermark &amp; Publish</h3>
+        <p>Your watermark is applied during upload. Each photo becomes a live WooCommerce product instantly with a watermarked preview and original download.</p>
+      </div>
+      <div class="step-card animate">
+        <img src="assets/icons/true.png" alt="" class="step-icon" width="56" height="56" loading="lazy">
+        <h3>Sell &amp; Deliver</h3>
+        <p>Customers browse your shop, buy photos, and download full-resolution originals. Expired albums clean up automatically. You do nothing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== REVENUE MODELS ====== -->
+<section id="revenue" class="section">
+  <div class="container">
+    <span class="section-label">Monetization</span>
+    <h2 class="section-title">More Ways to Earn from Every Photo</h2>
+    <p class="section-subtitle">You already have the client's attention and trust. Photolab helps you turn that into revenue, your way.</p>
+    <div class="revenue-grid">
+      <div class="revenue-card animate">
+        <img src="assets/icons/sell-directly.png" alt="" class="r-icon" width="56" height="56" loading="lazy">
+        <h3>Sell Directly</h3>
+        <p>Each photo is a product. Customers purchase from your store. You earn on every sale.</p>
+      </div>
+      <div class="revenue-card animate">
+        <img src="assets/icons/bundle-services.png" alt="" class="r-icon" width="56" height="56" loading="lazy">
+        <h3>Bundle with Services</h3>
+        <p>Include photos in your packages. Raise your rates naturally by adding value.</p>
+      </div>
+      <div class="revenue-card animate">
+        <img src="assets/icons/marketing-engine.png" alt="" class="r-icon" width="56" height="56" loading="lazy">
+        <h3>Marketing Engine</h3>
+        <p>Gift photos for Google reviews. Turn happy customers into public promoters.</p>
+      </div>
+      <div class="revenue-card animate">
+        <img src="assets/icons/mixed-packs.png" alt="" class="r-icon" width="56" height="56" loading="lazy">
+        <h3>Mixed Packs</h3>
+        <p>Combine photo packs with merchandise or sessions. Boost perceived value and order size.</p>
+      </div>
+      <div class="revenue-card animate">
+        <img src="assets/icons/revenue-stable.png" alt="" class="r-icon" width="56" height="56" loading="lazy">
+        <h3>Stable Income</h3>
+        <p>Recurring album sales create predictable revenue streams for your photography business.</p>
+      </div>
+      <div class="revenue-card animate">
+        <img src="assets/icons/revenue-reviews.png" alt="" class="r-icon" width="56" height="56" loading="lazy">
+        <h3>Boost Reviews</h3>
+        <p>Gift photos in exchange for Google reviews. Turn happy customers into public promoters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== RESULTS ====== -->
+<section id="results" class="section">
+  <div class="container">
+    <span class="section-label">Results</span>
+    <h2 class="section-title">Trusted by Photo Businesses</h2>
+    <p class="section-subtitle">Real results from photographers and experience businesses using Photolab's engine in production.</p>
+    <div class="stats-grid">
+      <div class="stat-item animate">
+        <span class="stat-number" data-target="10000" data-suffix="+">0</span>
+        <span class="stat-label">euro+ yearly revenue per active user</span>
+      </div>
+      <div class="stat-item animate">
+        <span class="stat-number" data-target="275" data-suffix="%">0</span>
+        <span class="stat-label">% revenue increase (case study)</span>
+      </div>
+      <div class="stat-item animate">
+        <span class="stat-number" data-target="100" data-suffix="s">0</span>
+        <span class="stat-label">of Google reviews from photo gifts</span>
+      </div>
+      <div class="stat-item animate">
+        <span class="stat-number" data-target="2000" data-suffix="+">0</span>
+        <span class="stat-label">photos supported per album</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PRICING ====== -->
+<section id="pricing" class="section">
+  <div class="container">
+    <span class="section-label">Pricing</span>
+    <h2 class="section-title">Free to Start. Pro When You Scale.</h2>
+    <p class="section-subtitle">Photolab Core is open-source and always free. Paid extensions unlock advanced workflows for growing businesses.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card animate">
+        <div class="pricing-name">Photolab Core</div>
+        <div class="pricing-price">Free <small>forever</small></div>
+        <ul class="pricing-features">
+          <li>Full upload to watermark to sell pipeline</li>
+          <li>Chunked upload (configurable batch size)</li>
+          <li>Imagick + GD watermark engine</li>
+          <li>Auto WooCommerce product creation</li>
+          <li>Album expiration &amp; auto-cleanup</li>
+          <li>Self-healing recovery (FSM + CAS)</li>
+          <li>REST API for headless integration</li>
+          <li>GPL v2+ &mdash; modify freely</li>
+        </ul>
+        <a href="#download" class="btn btn-outline">Download Free</a>
+      </div>
+      <div class="pricing-card featured animate">
+        <div class="pricing-name">Photolab Suite</div>
+        <div class="pricing-price">Coming Soon</div>
+        <ul class="pricing-features">
+          <li>Everything in Core</li>
+          <li>9 watermark positions + custom X/Y</li>
+          <li>Watermark opacity control</li>
+          <li>Output formats: JPG, WebP, PNG</li>
+          <li>Bulk draft &amp; rename album actions</li>
+          <li>Multi-domain centralized management</li>
+          <li>Remote upload to satellite sites</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#download" class="btn btn-primary">Get 20% Off</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== DOWNLOAD CTA ====== -->
+<section id="download" class="section">
+  <div class="container">
+    <div class="cta-card animate">
+      <h2>Start Selling Your Photos Today</h2>
+      <p class="cta-sub">Free download. No credit card. Works with any WordPress 6.5+ and WooCommerce 8.0+ store.</p>
+      <form class="email-form" id="emailForm">
+        <input type="email" id="emailInput" placeholder="you@example.com" required>
+        <button type="submit" class="btn btn-primary" id="downloadBtn">Get Download Link + 20% Off</button>
+      </form>
+      <div class="toggle-row">
+        <label class="toggle-switch">
+          <input type="checkbox" id="skipEmail">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label" id="toggleLabel">Skip and download directly</span>
+      </div>
+      <p class="discount-note">Leave your email and get <strong>20% off</strong> the Photolab Suite (Pro + Multidomain). No spam, ever.</p>
+      <div class="success-msg" id="successMsg">OK. Check your inbox! Your 20% discount code and download link are on the way.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <img src="assets/icons/logo.svg" alt="Photolab" width="150" height="auto" style="filter:brightness(0) invert(1);opacity:0.8">
+        </div>
+        <p>Open-source photo sales for WooCommerce. Built for photographers, surf schools, and experience businesses.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#features">Photolab Core</a>
+        <a href="#pricing">Photolab Pro</a>
+        <a href="#pricing">Multidomain</a>
+        <a href="https://github.com/photosync-team/photosync" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="https://photosync.gitbook.io/photosync-docs" target="_blank" rel="noopener">Documentation</a>
+        <a href="https://wordpress.org/plugins/" target="_blank" rel="noopener">WordPress.org</a>
+        <a href="https://github.com/photosync-team/photosync/releases" target="_blank" rel="noopener">Changelog</a>
+        <a href="https://santacruzfotolab.com/contact-us/" target="_blank" rel="noopener">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Photolab is free software licensed under GPL v2 or later. Made in Tenerife.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* === MOBILE MENU === */
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', function(){
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+  });
+  var mobileLinks = mobileMenu.querySelectorAll('a');
+  for (var i = 0; i < mobileLinks.length; i++) {
+    mobileLinks[i].addEventListener('click', function(){
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+    });
+  }
+
+  /* === SMOOTH SCROLL === */
+  var anchors = document.querySelectorAll('a[href^="#"]');
+  for (var j = 0; j < anchors.length; j++) {
+    anchors[j].addEventListener('click', function(e){
+      var href = this.getAttribute('href');
+      if (href === '#') return;
+      var target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+
+  /* === SCROLL ANIMATIONS === */
+  var animObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        animObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.animate').forEach(function(el){ animObserver.observe(el); });
+
+  /* === STATS COUNTER === */
+  var statObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        var target = parseInt(el.dataset.target, 10);
+        var suffix = el.dataset.suffix || '';
+        var current = 0;
+        var increment = Math.ceil(target / 40);
+        var timer = setInterval(function(){
+          current += increment;
+          if (current >= target) {
+            el.textContent = target.toLocaleString() + suffix;
+            clearInterval(timer);
+          } else {
+            el.textContent = current.toLocaleString();
+          }
+        }, 30);
+        statObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.stat-number[data-target]').forEach(function(el){ statObserver.observe(el); });
+
+  /* === EMAIL TOGGLE + DOWNLOAD === */
+  var skipToggle = document.getElementById('skipEmail');
+  var emailInput = document.getElementById('emailInput');
+  var downloadBtn = document.getElementById('downloadBtn');
+  var successMsg = document.getElementById('successMsg');
+  var emailForm = document.getElementById('emailForm');
+  var toggleLabel = document.getElementById('toggleLabel');
+
+  skipToggle.addEventListener('change', function(){
+    if (skipToggle.checked) {
+      emailInput.removeAttribute('required');
+      emailInput.style.opacity = '0.4';
+      downloadBtn.textContent = 'Download Photolab Free';
+      toggleLabel.textContent = 'Downloading without email';
+    } else {
+      emailInput.setAttribute('required', '');
+      emailInput.style.opacity = '1';
+      downloadBtn.textContent = 'Get Download Link + 20% Off';
+      toggleLabel.textContent = 'Skip and download directly';
+    }
+  });
+
+  emailForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = emailInput.value.trim();
+
+    if (!skipToggle.checked && email) {
+      /* ponytail: email collection endpoint TBD. Replace console.log with actual MailerLite/API call */
+      console.log('[Photolab Landing] Email captured:', email);
+      successMsg.textContent = 'OK. Check your inbox! Your 20% discount code and download link are on the way.';
+    } else {
+      successMsg.textContent = 'OK. Download starting...';
+    }
+
+    successMsg.classList.add('show');
+    downloadBtn.textContent = 'Downloading...';
+    downloadBtn.disabled = true;
+
+    setTimeout(function(){
+      var link = document.createElement('a');
+      link.href = '../photolab.zip';
+      link.download = 'photolab.zip';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      downloadBtn.textContent = skipToggle.checked ? 'Download Photolab Free' : 'Get Download Link + 20% Off';
+      downloadBtn.disabled = false;
+    }, 1200);
+  });
+
+  /* === NAV SCROLL BACKGROUND === */
+  window.addEventListener('scroll', function(){
+    var nav = document.getElementById('nav');
+    if (window.scrollY > 50) {
+      nav.style.background = 'rgba(10,48,46,0.96)';
+    } else {
+      nav.style.background = 'rgba(10,48,46,0.88)';
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+# Copyright (C) 2024 Photolab
+# This file is distributed under the same license as the Photolab plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Photolab 1.0.8\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/photolab\n"
+"POT-Creation-Date: 2026-04-26T00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2026-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Manual extraction - use WP-CLI wp i18n make-pot to regenerate\n"
+"X-Domain: photolab\n"
+
+#. Plugin Name of the plugin
+msgid "Photolab"
+msgstr ""
+
+#. Description of the plugin
+msgid "Gestione e vendita massiva di album fotografici su WooCommerce."
+msgstr ""
+
+#: includes/class-activator.php
+msgid "Photolab non può essere attivato:"
+msgstr ""
+
+#: includes/class-activator.php
+msgid "Torna ai plugin"
+msgstr ""
+
+#: includes/class-activator.php
+msgid "Photolab — Requisiti mancanti"
+msgstr ""
+
+#: includes/class-admin-notices.php includes/class-admin.php photolab.php
+msgid "Photolab richiede WooCommerce attivo. Il plugin è disabilitato."
+msgstr ""
+
+#: includes/class-admin.php
+msgid "Photolab: Imagick non disponibile. GD in uso. Performance ridotte su volumi elevati di watermark."
+msgstr ""
+
+#: includes/class-admin.php
+msgid "Accesso non consentito."
+msgstr ""
+
+#: includes/class-admin.php
+msgid "Photolab richiede i Pretty Permalinks attivi. Abilita una struttura permalink diversa da \"Normale\" in Impostazioni → Permalink."
+msgstr ""
+
+#: includes/class-admin.php
+msgid "Photolab: GD image engine in uso. Imagick è consigliato per performance ottimali con watermark su volumi elevati."
+msgstr ""
+
+#: includes/rest/class-upload-controller.php
+#: includes/rest/class-album-controller.php
+#: includes/rest/class-watermark-controller.php
+#: includes/rest/class-settings-controller.php
+msgid "Accesso non autorizzato."
+msgstr ""
+
+#: includes/rest/class-upload-controller.php
+msgid "Upload già in corso per questo album. Attendi il completamento."
+msgstr ""
+
+#: includes/rest/class-upload-controller.php
+msgid "Errore creazione album nel database."
+msgstr ""
+
+#: includes/rest/class-upload-controller.php
+msgid "Nessun file ricevuto nel chunk."
+msgstr ""
+
+#: includes/rest/class-upload-controller.php
+msgid "Job ID non valido."
+msgstr ""
+
+#: includes/rest/class-upload-controller.php
+msgid "Errore aggiornamento stato album."
+msgstr ""
+
+#: includes/rest/class-album-controller.php
+msgid "Album non trovato."
+msgstr ""
+
+#: includes/rest/class-album-controller.php
+msgid "Album upload in corso, impossibile eliminare."
+msgstr ""
+
+#: includes/rest/class-album-controller.php
+msgid "Album non disponibile per l'eliminazione al momento."
+msgstr ""
+
+#: includes/rest/class-album-controller.php
+msgid "Errore database durante il conteggio degli album."
+msgstr ""
+
+#: includes/rest/class-album-controller.php
+msgid "Errore database durante il recupero degli album."
+msgstr ""
+
+#: includes/rest/class-watermark-controller.php
+msgid "File watermark mancante o corrotto."
+msgstr ""
+
+#: includes/rest/class-watermark-controller.php
+msgid "Il watermark deve essere un file PNG."
+msgstr ""
+
+#: includes/rest/class-watermark-controller.php
+msgid "Impossibile creare la directory assets. Verifica i permessi del filesystem."
+msgstr ""
+
+#: includes/rest/class-watermark-controller.php
+msgid "Impossibile salvare il file watermark."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Upload photo"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Name"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Album expiration"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Watermark"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Price"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Select photos"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Upload"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Galleries Status"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Album"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "N. Photos"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Expiration"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Status"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Action"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Load More Galleries..."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Watermark settings"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Current watermark:"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Watermark preview"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Select a PNG file"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "PNG only. Will be composited on every uploaded photo."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Position"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Full width"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Bottom right"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Close"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Save"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Delete"
+msgstr ""
