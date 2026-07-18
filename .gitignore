@@ -8,4 +8,3 @@ graphify-out
 .env
 .phpunit.result.cache
 .phpunit.cache
-composer.lock

@@ -13,12 +13,6 @@ parameters:
 			path: includes/class-activator.php
 
 		-
-			message: '#^Call to an undefined method ActionScheduler_QueueRunner\:\:maybe_dispatch_async_request\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: includes/class-admin.php
-
-		-
 			message: '#^Comparison operation "\<\=" between int\<1, max\> and 0 is always false\.$#'
 			identifier: smallerOrEqual.alwaysFalse
 			count: 1
@@ -43,8 +37,8 @@ parameters:
 			path: includes/class-cleanup-scheduler.php
 
 		-
-			message: '#^Function as_schedule_single_action invoked with 6 parameters, 2\-4 required\.$#'
-			identifier: arguments.count
+			message: '#^Function as_schedule_single_action not found\.$#'
+			identifier: function.notFound
 			count: 1
 			path: includes/class-cleanup-scheduler.php
 
@@ -141,12 +135,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$array \(non\-empty\-list\<int\>\) of array_values is already a list, call has no effect\.$#'
 			identifier: arrayValues.list
-			count: 1
-			path: includes/class-cleanup-scheduler.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between null and int\|true will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: includes/class-cleanup-scheduler.php
 
