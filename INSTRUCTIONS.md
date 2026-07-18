@@ -162,11 +162,11 @@ wp i18n make-pot photolab/ photolab/languages/photolab.pot --domain=photolab
 
 ### "Unable to enqueue watermark job"
 **Cause**: Old code without inline watermark. WC()->queue() returning 0.  
-**Fix**: Update to v2.2.4+ which uses inline watermark.
+**Fix**: Photolab uses inline watermark processing.
 
 ### "Album in stato idle, chunk rifiutato"
 **Cause**: Album settled to idle before all chunks were processed (old async flow).  
-**Fix**: Update to v2.2.4+ with inline watermark — not possible with async recovery.
+**Fix**: Photolab uses inline watermark — not applicable with async recovery.
 
 ### "Undefined constant 'WP_Error'"
 **Cause**: Corrupted `class-watermark-processor.php` — `true` replaced with `\WP_Error` by aggressive regex.  

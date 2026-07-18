@@ -245,7 +245,7 @@ class Watermark_Job {
 
 			if ( ! $claimed ) {
 				Logger::debug(
-					sprintf( 'Watermark_Job::process_batch — photo=%d già preso (status=%s), skip.', $photo_id, $photo->photo_status ),
+					sprintf( 'Watermark_Job::process_batch — photo=%d already taken (status=%s), skip.', $photo_id, $photo->photo_status ),
 					$row_context
 				);
 				continue;
@@ -559,7 +559,7 @@ class Watermark_Job {
 		$body  = sprintf( "Album ID: %d\n", $album_id );
 		$body .= sprintf( "Tentativi: %d\n", $attempt );
 		$body .= sprintf( "Photo IDs (%d): %s\n", count( $photo_ids ), implode( ', ', $photo_ids ) );
-		$body .= "\nIl job di watermark è stato disattivato. Verifica i log con source 'photolab-watermark-job'.\n";
+		$body .= "\nThe watermark job has been disabled. Check logs with source 'photolab-watermark-job'.\n";
 
 		if ( '' !== $to ) {
 			wp_mail( $to, $subject, $body );

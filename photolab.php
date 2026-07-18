@@ -236,7 +236,7 @@ function photolab_log_security_audit(): void {
 	}
 
 	// 4. WooCommerce HPOS compatibility — plugin uses wc_get_product(), no direct wp_posts access. OK.
-	Logger::info( 'Audit: compatibilità HPOS WooCommerce — OK (nessun accesso diretto a wp_posts per prodotti).', $context );
+	Logger::info( 'Audit: WooCommerce HPOS compatibility — OK (no direct wp_posts access for products).', $context );
 
 	// 5. PHP version.
 	if ( version_compare( PHP_VERSION, '8.1', '<' ) ) {

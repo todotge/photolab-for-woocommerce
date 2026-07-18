@@ -977,7 +977,7 @@ class Cleanup_Scheduler {
 			if ( $this->is_album_job_pending( (int) $album_id ) ) {
 				Logger::debug(
 					sprintf(
-						'recover_stuck_watermarking_photos — album=%d job già pendente, no re-enqueue.',
+						'recover_stuck_watermarking_photos — album=%d job already pending, no re-enqueue.',
 						$album_id
 					),
 					$context

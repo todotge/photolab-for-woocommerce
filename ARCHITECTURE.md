@@ -1,6 +1,6 @@
 # Photolab Architecture
 
-> Version 2.2.5 — DB schema 1.4.0  
+> Version 0.0.5 — DB schema 1.0.0  
 > PHP 8.1+, WordPress 6.5+, WooCommerce 8.0+  
 > Imagick (preferred) / GD (fallback)
 

@@ -254,7 +254,7 @@ class Database {
 
 			Logger::info( 'Database::migrate_1_1_0 — ADD UNIQUE KEY file_hash_album completato.', $context );
 		} else {
-			Logger::info( 'Database::migrate_1_1_0 — UNIQUE KEY file_hash_album già presente, skip.', $context );
+			Logger::info( 'Database::migrate_1_1_0 — UNIQUE KEY file_hash_album already present, skip.', $context );
 		}
 	}
 

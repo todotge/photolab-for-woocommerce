@@ -1,6 +1,6 @@
-=== Photolab ===
+=== Photolab for WooCommerce ===
 Contributors: photolabdev
-Tags: woocommerce, photos, gallery, watermark, digital downloads
+Tags: woocommerce, photos, gallery, watermark, digital downloads, bulk upload, photo sales
 Requires at least: 6.5
 Tested up to: 6.7
 Stable tag: 0.0.5
@@ -8,38 +8,38 @@ Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Gestione e vendita massiva di album fotografici su WooCommerce.
+Bulk photo album management and sales for WooCommerce. Upload thousands of photos, auto-watermark, and sell as downloadable products.
 
 == Description ==
 
-Photolab è un plugin per la gestione e vendita massiva di album fotografici su WooCommerce. Consente di caricare migliaia di foto in batch, applicare watermark in background e pubblicarle come prodotti virtuali scaricabili. La versione 2.0 introduce una macchina a stati finiti (FSM) per la gestione concorrente, recovery automatica degli upload interrotti, watermark asincrono via Action Scheduler, multi-upload paralleli con rate limiting e protezione del download durante la fase di processing.
+Photolab streamlines selling digital photos at scale through WooCommerce. Upload thousands of photos in batches, apply watermarks inline during upload, and publish each as a downloadable product — all from a single admin panel. Built for event photographers, photo studios, and anyone selling large galleries online.
 
-**Caratteristiche principali:**
+**Key features:**
 
-* Upload massivo di foto in lotti (supporta 2000+ foto per album)
-* Watermark asincrono applicato in background da Action Scheduler (non blocca l'upload)
-* Posizione watermark configurabile: full-width o bottom-right
-* Ogni foto diventa un prodotto WooCommerce virtuale e scaricabile
-* Le foto originali sono protette dall'accesso pubblico; i clienti scaricano solo dopo l'acquisto
-* Download bloccato finché la foto non è stata processata (HTTP 425 in fase di watermarking, 410 se scaduta)
-* Multi-upload parallelo: fino a 3 album in upload contemporaneamente per utente
-* Recovery automatica degli upload interrotti (heartbeat client + cron server-side, FSM con stato `aborted` e reset manuale)
-* Idempotency-Key sugli endpoint chunk per retry sicuri dopo timeout di rete
-* Distributed lock opzionale (Redis o transient WP) per ambienti multi-server
-* Cleanup giornaliero failsafe: re-trigger foto stuck, retry budget per foto, retention log e Action Scheduler
-* Logging strutturato con auto-contesto (user_id, album_id, photo_id) e redazione dati sensibili
-* Gestione album con data di scadenza automatica
-* Deduplicazione SHA-256 per evitare foto duplicate nello stesso album
-* Pannello admin SPA senza ricaricamenti di pagina, comunicazione via REST API
-* Supporto Imagick (raccomandato) e GD come fallback per l'elaborazione immagini
-* Compatibile con WooCommerce HPOS
+* Bulk chunked upload (5 files per chunk, supports 2000+ photos per album)
+* Inline watermarking during upload — no background queue drift; Imagick preferred, GD fallback
+* Configurable watermark position: full-width or bottom-right
+* Each photo becomes a virtual downloadable WooCommerce product
+* Original photos protected from public access; customers download only after purchase
+* Download blocked until processing completes (HTTP 425 during watermarking, 410 if expired)
+* Multi-upload: up to 3 concurrent album uploads per user with rate limiting
+* Automatic recovery of interrupted uploads (client heartbeat + server-side cron, FSM with aborted state and manual reset)
+* Idempotency-Key on chunk endpoints for safe retry after network timeouts
+* Distributed lock (MySQL GET_LOCK / transient fallback) for multi-server deployments
+* Daily cleanup failsafe: stuck photo detection, retry budget, orphan scan, log retention
+* Structured logging with auto-context (user_id, album_id, photo_id) and sensitive data redaction
+* Album expiration management with automatic cleanup
+* SHA-256 deduplication to prevent duplicate photos in the same album
+* SPA admin panel with zero page reloads, REST API communication
+* Imagick support (recommended) with GD fallback for image processing
+* WooCommerce HPOS compatible
 
-**Requisiti:**
+**Requirements:**
 
 * WordPress 6.5+
 * WooCommerce 8.0+
 * PHP 8.1+
-* Estensione PHP Imagick (consigliata) o GD
+* PHP Imagick extension (recommended) or GD
 * memory_limit >= 256MB
 * max_execution_time >= 60s
 * upload_max_filesize >= 20MB
@@ -47,16 +47,16 @@ Photolab è un plugin per la gestione e vendita massiva di album fotografici su 
 
 == Installation ==
 
-1. Carica la cartella `photolab` nella directory `/wp-content/plugins/`.
-2. Attiva il plugin dalla schermata "Plugin" di WordPress.
-3. Assicurati che WooCommerce sia installato e attivo prima di attivare Photolab.
-4. Verifica che i Pretty Permalinks siano abilitati in Impostazioni → Permalink (qualsiasi struttura eccetto "Normale").
+1. Upload the `photolab` folder to `/wp-content/plugins/`.
+2. Activate the plugin from the WordPress Plugins screen.
+3. Ensure WooCommerce is installed and active before activating Photolab.
+4. Verify Pretty Permalinks are enabled in Settings → Permalinks (any structure except "Plain").
 
-**Protezione delle foto originali:**
+**Original photo protection:**
 
-La cartella `wp-content/uploads/Photolab/photos/` è protetta tramite un file `.htaccess` che nega l'accesso diretto a tutti i file. Questo meccanismo funziona su server **Apache** con `mod_rewrite` abilitato.
+The `wp-content/uploads/Photolab/photos/` directory is protected via an `.htaccess` file denying direct access. This works on **Apache** servers with `mod_rewrite` enabled.
 
-Se utilizzi **Nginx**, il file `.htaccess` non viene letto dal server. Devi aggiungere manualmente una regola nel blocco `server` per bloccare l'accesso a quella directory. Esempio:
+If using **Nginx**, `.htaccess` files are not read. Add a rule to your server block to protect the directory:
 
 ```
 location ~* /wp-content/uploads/Photolab/photos/ {
@@ -65,98 +65,78 @@ location ~* /wp-content/uploads/Photolab/photos/ {
 }
 ```
 
-Consulta la documentazione del tuo hosting provider per applicare questa configurazione.
+Consult your hosting provider documentation to apply this configuration.
 
 == Frequently Asked Questions ==
 
-= Quante foto posso caricare per album? =
+= How many photos can I upload per album? =
 
-Il plugin è progettato per gestire volumi elevati, fino a 2000+ foto per album. L'upload avviene in chunk da 5 file per volta (filtrabile via `photolab_chunk_size`) per garantire la compatibilità con hosting con limiti di esecuzione ridotti.
+The plugin handles high volumes, up to 2000+ photos per album. Uploads use chunks of 5 files (filterable via `photolab_chunk_size`) for compatibility with shared hosting.
 
-= Posso usare il plugin senza Imagick? =
+= Can I use the plugin without Imagick? =
 
-Sì. Se Imagick non è disponibile, Photolab utilizza automaticamente la libreria GD come fallback per l'applicazione del watermark. Le performance su volumi elevati saranno ridotte rispetto a Imagick.
+Yes. If Imagick is unavailable, Photolab automatically uses GD for watermarking. Performance on large volumes will be reduced compared to Imagick.
 
-= Il watermark viene applicato alle foto originali? =
+= Does the watermark affect original photos? =
 
-No. Il watermark viene applicato a una copia della foto (salvata in `wp-content/uploads/Photolab/watermarked/`). La foto originale è conservata separatamente e protetta dall'accesso pubblico.
+No. The watermark is applied to a copy (saved in `wp-content/uploads/Photolab/watermarked/`). Originals are stored separately and protected from public access.
 
-= Quando viene applicato il watermark? =
+= When is the watermark applied? =
 
-Dalla v2.0.0 il watermark è asincrono: viene applicato in background da un job Action Scheduler dopo che la foto è stata caricata. L'endpoint `/upload/chunk` ritorna in pochi secondi senza dover aspettare il compositing. Il pannello admin mostra il progresso in tempo reale via polling su `GET /photolab/v1/photos/watermark-status?album_id=X`. Finché una foto non è in stato `watermarked` il download è bloccato (HTTP 425).
+Watermarking is inline: it runs during the same HTTP request as the upload chunk. Photos are watermarked immediately as they arrive, not via a background queue. The `/upload/chunk` endpoint returns after processing completes. Download is blocked until the photo reaches the `watermarked` state (HTTP 425).
 
-= Cosa succede se chiudo il browser durante l'upload? =
+= What happens if I close the browser during upload? =
 
-Il client invia un heartbeat ogni 30 secondi. Se il server non riceve heartbeat per 5 minuti (oppure 10 minuti se l'heartbeat non è mai arrivato), un job di recovery passa l'album in stato `aborted`. Da pannello admin puoi resettare l'album (`POST /albums/{id}/reset`) per riprendere l'upload, oppure eliminarlo. Le foto già caricate rimangono come prodotti WooCommerce validi.
+The client sends a heartbeat every 30 seconds. If the server receives no heartbeat for 5 minutes (or 10 minutes if none was ever received), a recovery job transitions the album to `aborted`. From the admin panel you can reset the album (`POST /albums/{id}/reset`) to resume, or delete it. Already-uploaded photos remain as valid WooCommerce products.
 
-= Posso caricare più album contemporaneamente? =
+= Can I upload multiple albums at once? =
 
-Sì, fino a 3 album in upload paralleli per utente. Tentativi oltre questo limite ritornano HTTP 429. Album con stesso nome già in volo per lo stesso utente ritornano HTTP 409.
+Yes, up to 3 concurrent album uploads per user. Attempts beyond this limit return HTTP 429. Albums with the same name already in flight for the same user return HTTP 409.
 
-= Cosa succede se il chunk di upload va in timeout di rete? =
+= What happens if a chunk upload times out? =
 
-Il client può ripetere lo stesso `/upload/chunk` con header `Idempotency-Key`. La risposta originale viene replicata dal transient (TTL 24h) senza riprocessare i file. Senza header, il comportamento è invariato.
+The client can retry the same `/upload/chunk` with an `Idempotency-Key` header. The original response is replayed from a transient (TTL 24h) without reprocessing files. Without the header, behavior is unchanged.
 
-= Cosa succede quando una foto scade? =
+= What happens when a photo expires? =
 
-Se viene impostata una data di scadenza per l'album, il plugin elimina automaticamente il prodotto WooCommerce, l'immagine watermarked e il record dal database tramite un job giornaliero gestito da Action Scheduler (incluso in WooCommerce).
+If an expiration date is set for the album, the plugin automatically deletes the WooCommerce product, watermarked image, and database record via a daily job managed by Action Scheduler (bundled with WooCommerce).
 
-= Come funziona il cleanup giornaliero? =
+= How does the daily cleanup work? =
 
-Un job Action Scheduler `photolab_daily_cleanup` esegue ogni 24 ore (default 03:00 UTC) un sweep failsafe: rileva job watermark stuck >1h, rimette in coda foto bloccate in `watermarking`, riprova foto `failed` entro un budget di 5 retry per foto, purga transient idempotency scaduti, scansiona orfani disco/DB (solo log) ed elimina i log Photolab più vecchi di 30 giorni (filter `photolab_log_retention_days`). I log Action Scheduler vengono auto-eliminati dopo 7 giorni.
+An Action Scheduler job `photolab_daily_cleanup` runs every 24 hours (default 03:00 UTC) performing a failsafe sweep: detects stuck watermark jobs >1h, re-enqueues stalled photos, retries failed photos within a 5-retry budget per photo, purges expired idempotency transients, scans for disk/DB orphans (log only), and deletes Photolab logs older than 30 days (filter `photolab_log_retention_days`). Action Scheduler logs are auto-deleted after 7 days.
 
-= Il plugin funziona in ambienti multi-server? =
+= Does the plugin work in multi-server environments? =
 
-Sì. La v2.1.0 introduce un distributed lock opzionale: se WordPress usa un object cache esterno (es. Redis), il lock sfrutta `wp_cache_add` (atomico SET NX). In assenza di object cache esterno, il fallback è un transient. Tentativi concorrenti su `/upload/chunk` per lo stesso album da nodi diversi ritornano HTTP 423. Il CAS sul DB resta come ultima difesa. Disabilitabile via filter `photolab_use_distributed_lock`.
+Yes. An optional distributed lock is available: if WordPress uses an external object cache (e.g. Redis), the lock uses `wp_cache_add` (atomic SET NX). Without external object cache, the fallback is a transient. Concurrent chunk attempts for the same album from different nodes return HTTP 423. CAS on the database is the final safeguard. Disable via filter `photolab_use_distributed_lock`.
 
-= I Pretty Permalinks sono obbligatori? =
+= Are Pretty Permalinks required? =
 
-Sì. Le REST API di WordPress richiedono una struttura permalink diversa da "Normale". Il plugin mostra un avviso admin se i Pretty Permalinks non sono attivi.
+Yes. The WordPress REST API requires a permalink structure other than "Plain". The plugin shows an admin notice if Pretty Permalinks are not active.
 
-= Il plugin funziona con WooCommerce HPOS? =
+= Does Photolab work with WooCommerce HPOS? =
 
-Sì. Photolab non accede direttamente alla tabella `wp_posts` per i prodotti WooCommerce ed è compatibile con la funzionalità High-Performance Order Storage (HPOS).
+Yes. Photolab does not access `wp_posts` directly for WooCommerce products and is fully compatible with High-Performance Order Storage (HPOS).
 
-= Dove trovo i log? =
+= Where do I find the logs? =
 
-In `WooCommerce > Status > Logs`, filtrando per source `photolab*`. Source disponibili: `photolab`, `photolab-fsm`, `photolab-upload`, `photolab-heartbeat`, `photolab-recovery`, `photolab-watermark-job`, `photolab-rate-limit`, `photolab-ownership`, `photolab-download-guard`, `photolab-idempotency`, `photolab-cleanup`, `photolab-lock`, `photolab-logger`. Ogni voce include automaticamente `user_id`, `album_id` e altre chiavi contestuali. Dati sensibili (password, token, email) vengono redatti automaticamente.
+In **WooCommerce → Status → Logs**, filter by source `photolab*`. Available sources: `photolab`, `photolab-fsm`, `photolab-upload`, `photolab-heartbeat`, `photolab-recovery`, `photolab-watermark-job`, `photolab-rate-limit`, `photolab-ownership`, `photolab-download-guard`, `photolab-idempotency`, `photolab-cleanup`, `photolab-lock`, `photolab-logger`. Each entry automatically includes `user_id`, `album_id`, and other contextual keys. Sensitive data (passwords, tokens, emails) is automatically redacted.
 
 == Changelog ==
 
-= 2.1.0 =
-* FASE 8 — Optional distributed lock (`Photolab\Lock`) for multi-server deployments. Backend detection: filter `photolab_use_distributed_lock` (default true) → external object cache (`wp_cache_add` atomic SET NX, group `photolab-locks`) → transient fallback (`photolab_lock_*` prefix).
-* Lock integrated in `Upload_Controller::chunk()`: lock key `photolab_chunk_{album_id}`, timeout 60s, body extracted in `chunk_locked()` private method, release in `finally` to cover all return paths and exceptions.
-* HTTP 423 Locked response (`album_locked` error code) when a concurrent worker on another node holds the lock.
-* New log source `photolab-lock` (acquire/busy/release/release-fail).
-* No new external dependencies — works identically in single-server installs without Redis.
-* FASE 9 — Structured logging: `Logger::log()` is now the central method. `info/debug/warning/error/critical` are backward-compatible aliases.
-* Auto-context: `Logger::set_context($key, $value)` and `Logger::clear_context()` push request-scoped fields (`user_id`, `album_id`, `is_async_job`, `is_cron`) merged automatically into every log call. Wired in every REST callback and Action Scheduler hook (try/finally to prevent context leak).
-* Sensitive-key redaction (password, token, secret, api_key, email) via `Logger::sanitize_context()`. Filterable via `photolab_log_sensitive_keys`.
-* Log retention via `Logger::cleanup_old_logs()` (default 30 days, minimum 7, filter `photolab_log_retention_days`). Called from the daily cleanup orchestrator as the last step.
-* New log source `photolab-logger`.
+= 0.0.5 — Initial public release =
 
-= 2.0.0 =
-* FASE 1 — DB schema bumped to `1.3.0`. New columns: `albums.user_id`, `albums.upload_started_at`, `albums.last_heartbeat`, `albums.aborted_at`, `photos.album_id`, `photos.photo_status`, `photos.retry_count`, `photos.updated_at` (with `ON UPDATE CURRENT_TIMESTAMP`). `albums.status` widened to `VARCHAR(20)` (no ENUM ALTER on shared host). New indexes: `albums(user_id)`, `albums(status, last_heartbeat)`, `photos(album_id)`, `photos(photo_status)`. Idempotent migrations (`migrate_1_2_0_fsm`, `migrate_1_3_0_photos_updated_at`) that backfill `album_id` and `photo_status` from legacy data.
-* FASE 2 — Finite State Machine + Compare-And-Swap. New `Photolab\State_Machine` with whitelisted column updates. Atomic transitions for both album and photo states. Endpoints `/upload/start`, `/upload/chunk`, `/upload/complete`, `DELETE /albums/{id}` migrated to CAS — no more direct `$wpdb->update()` on `status`.
-* FASE 2.5 — Recovery: `POST /upload/heartbeat` (client every 30s) + AS hook `photolab_recovery_scan` (every 15 min). Stale heartbeat (>5 min) or never-received heartbeat (>10 min) → CAS `uploading → aborted`. New endpoint `POST /albums/{id}/reset` (CAS `aborted → idle`). Admin UI: red "Aborted" badge + amber Reset button.
-* FASE 3 — Asynchronous watermark via `WC_Queue` (Action Scheduler). `/upload/chunk` no longer applies the watermark inline — photos are inserted with `photo_status='uploaded'` and the `photolab_watermark_batch` AS job (group `photolab_album_{id}`) handles compositing in the background. Per-photo CAS `uploaded → watermarking → watermarked` (or `failed` on exception). Retry budget 5 (filter `photolab_watermark_max_retries`), admin email on exhaustion. New `Watermark_Processor` (Imagick + GD, shared) and `Watermark_Job` classes. Album CAS `watermarking → idle` runs once every photo reaches a terminal state. New endpoint `GET /photos/watermark-status?album_id=X` (transient cache 2s) for admin polling.
-* FASE 4 — Multi-upload + rate limiting. Up to 3 concurrent uploads per user (HTTP 429 above). Album-name dedup per user while in flight (HTTP 409). Ownership check (`user_id`) on every album endpoint — legacy rows with `user_id=NULL` exempt. AS group isolation (`photolab_album_{id}`) prevents cross-album interference. Admin UI: status badges (`Uploading`/`Processing`/`Aborted`/`Deleting`), Delete button disabled for non-`idle/aborted`, photo-count tooltip on aborted albums. New log sources `photolab-rate-limit`, `photolab-ownership`.
-* FASE 5 — Download guard + Idempotency-Key. New `Photolab\Download_Guard` registers `woocommerce_product_file_download_path` (priority 10): `watermarked` → allow, `uploaded`/`watermarking` → HTTP 425 "still being processed", `failed`/`deleted` → HTTP 410 "no longer available", non-Photolab products no-op, DB error fail-OPEN to avoid blocking legitimate downloads on infrastructure outages. `/upload/chunk` accepts optional `Idempotency-Key` header (regex `[A-Za-z0-9_-]{1,128}`); successful responses cached as transient `photolab_idempotent_*` (TTL 24h). Replay returns the cached payload without reprocessing the chunk. New log sources `photolab-download-guard`, `photolab-idempotency`.
-* FASE 6 — Daily cleanup failsafe. New AS hook `photolab_daily_cleanup` (24h, first run `tomorrow 03:00:00 UTC`). Orchestrates: stuck AS watermark jobs detection (`status=in-progress` + `COALESCE(last_attempt_gmt, scheduled_date_gmt) < UTC-1h`, log + admin notify on `attempts >= 5`), CAS `watermarking → failed` for photos stuck >1h with re-enqueue, retry-budget-aware CAS `failed → uploaded` (max 5 retries via option `photolab_watermark_retry_{photo_id}`, mirror `retry_count` column), idempotency transient purge, orphan disk/DB scan (log only, never delete). AS retention 7 days via top-level filter `action_scheduler_retention_period`. Per-photo retry counter bumped from `Watermark_Job` (atomic with the failure path) and cleared on `watermarked`. Admin notifications guarded by option `photolab_watermark_notified_{photo_id}` to prevent spam. New log source `photolab-cleanup`.
-* Activator now uses `esc_html__()` and `array_map('esc_html', $errors)` in `wp_die()`.
-* All admin JS strings translated to English.
-* `set_time_limit(120)` wrapped in `function_exists()` check (WP.org compliance).
-
-= 1.0.9 =
-* Replace Tailwind CDN with local build (assets/css/admin.css) — WP.org Guideline #8 compliance.
-* Add Domain Path: /languages header to plugin file.
-
-= 1.0.8 =
-* Initial public release.
-* Upload massivo chunked con watermark e creazione prodotto WooCommerce in pipeline unificata.
-* Pannello admin SPA via REST API con Tailwind CSS.
-* Gestione album: creazione, lista paginata, eliminazione con cleanup completo.
-* Cleanup automatico foto scadute via Action Scheduler.
-* Protezione race condition su upload simultanei (RC-1 — RC-6).
-* Supporto Imagick con fallback GD.
-* Deduplicazione SHA-256 per album.
+* Bulk chunked upload with inline watermarking (Imagick + GD)
+* WooCommerce product auto-creation per photo
+* Configurable watermark position (full-width / bottom-right)
+* Album expiration with automatic cleanup
+* Finite State Machine with CAS transitions
+* Upload recovery (heartbeat + server-side scan + manual reset)
+* Multi-upload rate limiting (3 concurrent per user)
+* Idempotency-Key for safe chunk retry
+* Distributed lock for multi-server deployments
+* Download guard (HTTP 425 during processing, 410 expired)
+* Structured logging with 13 sources via wc_get_logger
+* SHA-256 deduplication within albums
+* HPOS compatible
+* SPA admin panel (vanilla JS + Tailwind CSS local build)
+* CI pipeline: PHPStan level 6, PHPCS WordPress, PHPUnit (30 test files)

@@ -35,7 +35,7 @@ class Activator {
 	 * @return void
 	 */
 	public static function activate(): void {
-		Logger::info( 'Activator::activate() — avvio attivazione plugin.', array( 'source' => 'photolab-activator' ) );
+		Logger::info( 'Activator::activate() — starting plugin activation.', array( 'source' => 'photolab-activator' ) );
 
 		// 1. Check requirements — bail with deactivation if critical ones fail.
 		$errors = self::check_requirements();
@@ -47,7 +47,7 @@ class Activator {
 			add_action( 'admin_notices', array( static::class, 'show_activation_errors' ) );
 
 			Logger::error(
-				'Activator::activate() — requisiti mancanti: ' . implode( '; ', $errors ),
+				'Activator::activate() — missing requirements: ' . implode( '; ', $errors ),
 				array( 'source' => 'photolab-activator' )
 			);
 
@@ -58,8 +58,8 @@ class Activator {
 			wp_die(
 				'<strong>' . esc_html__( 'Photolab could not be activated:', 'photolab' ) . '</strong><br>' .
 				implode( '<br>', array_map( 'esc_html', $errors ) ) .
-				'<br><a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">&laquo; ' . esc_html__( 'Torna ai plugin', 'photolab' ) . '</a>',
-				esc_html__( 'Photolab — Requisiti mancanti', 'photolab' ),
+				'<br><a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">&laquo; ' . esc_html__( 'Back to plugins', 'photolab' ) . '</a>',
+				esc_html__( 'Photolab — Missing requirements', 'photolab' ),
 				array( 'back_link' => false )
 			);
 		}
@@ -70,11 +70,11 @@ class Activator {
 			$db->install();
 		} catch ( \Throwable $e ) {
 			Logger::error(
-				'Activator::activate() — errore install DB: ' . $e->getMessage(),
+				'Activator::activate() — DB install error: ' . $e->getMessage(),
 				array( 'source' => 'photolab-activator' )
 			);
 			wp_die(
-				esc_html( 'Photolab — errore creazione tabelle DB: ' . $e->getMessage() ),
+				esc_html( 'Photolab — DB table creation error: ' . $e->getMessage() ),
 				'Photolab — Errore DB',
 				array( 'back_link' => true )
 			);
@@ -86,7 +86,7 @@ class Activator {
 		// 4. Flush rewrite rules.
 		flush_rewrite_rules();
 
-		Logger::info( 'Activator::activate() — attivazione completata.', array( 'source' => 'photolab-activator' ) );
+		Logger::info( 'Activator::activate() — activation complete.', array( 'source' => 'photolab-activator' ) );
 	}
 
 	/**
@@ -98,7 +98,7 @@ class Activator {
 	 * @return void
 	 */
 	public static function deactivate(): void {
-		Logger::info( 'Activator::deactivate() — avvio disattivazione plugin.', array( 'source' => 'photolab-activator' ) );
+		Logger::info( 'Activator::deactivate() — starting plugin deactivation.', array( 'source' => 'photolab-activator' ) );
 
 		flush_rewrite_rules();
 
@@ -109,7 +109,7 @@ class Activator {
 		// Clear any persistent admin notices.
 		Admin_Notices::clear_all();
 
-		Logger::info( 'Activator::deactivate() — disattivazione completata.', array( 'source' => 'photolab-activator' ) );
+		Logger::info( 'Activator::deactivate() — deactivation complete.', array( 'source' => 'photolab-activator' ) );
 	}
 
 	/**
@@ -123,7 +123,7 @@ class Activator {
 			return;
 		}
 
-		echo '<div class="notice notice-error"><p><strong>Photolab non può essere attivato:</strong></p><ul>';
+		echo '<div class="notice notice-error"><p><strong>Photolab could not be activated:</strong></p><ul>';
 		foreach ( $errors as $error ) {
 			echo '<li>' . esc_html( $error ) . '</li>';
 		}
@@ -144,7 +144,7 @@ class Activator {
 	private static function check_requirements(): array {
 		$errors = array();
 
-		Logger::info( 'Activator::check_requirements() — verifica requisiti.', array( 'source' => 'photolab-activator' ) );
+		Logger::info( 'Activator::check_requirements() — checking requirements.', array( 'source' => 'photolab-activator' ) );
 
 		// PHP version.
 		if ( version_compare( PHP_VERSION, PHOTOLAB_MIN_PHP, '<' ) ) {
@@ -186,7 +186,7 @@ class Activator {
 			// admin notice shown after activation.
 			set_transient( 'photolab_gd_only_warning', true, 0 );
 			Logger::warning(
-				'Activator::check_requirements() — solo GD disponibile. Imagick mancante. Performance ridotte.',
+				'Activator::check_requirements() — GD only available. Imagick missing. Reduced performance.',
 				array( 'source' => 'photolab-activator' )
 			);
 		}
@@ -228,7 +228,7 @@ class Activator {
 		}
 
 		if ( empty( $errors ) ) {
-			Logger::info( 'Activator::check_requirements() — tutti i requisiti soddisfatti.', array( 'source' => 'photolab-activator' ) );
+			Logger::info( 'Activator::check_requirements() — all requirements met.', array( 'source' => 'photolab-activator' ) );
 		}
 
 		return $errors;
@@ -260,7 +260,7 @@ class Activator {
 
 		foreach ( $dirs as $dir ) {
 			if ( ! wp_mkdir_p( $dir ) ) {
-				$message = sprintf( 'Directory non creabile: %s — verifica i permessi del filesystem.', $dir );
+				$message = sprintf( 'Directory not writable: %s — check filesystem permissions.', $dir );
 
 				Logger::error(
 					'Activator::create_directories() — ' . $message,
@@ -304,7 +304,7 @@ class Activator {
 		$bytes = file_put_contents( $htaccess_path, self::HTACCESS_CONTENT );
 
 		if ( false === $bytes ) {
-			$message = sprintf( 'Impossibile scrivere .htaccess in: %s — le foto originali potrebbero essere accessibili pubblicamente.', $dir );
+			$message = sprintf( 'Unable to write .htaccess in: %s — original photos may be publicly accessible.', $dir );
 
 			Logger::error(
 				'Activator::write_htaccess() — ' . $message,
