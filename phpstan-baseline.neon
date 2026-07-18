@@ -1,0 +1,589 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Constant MB_IN_BYTES not found\.$#'
+			identifier: constant.notFound
+			count: 3
+			path: includes/class-activator.php
+
+		-
+			message: '#^If condition is always false\.$#'
+			identifier: if.alwaysFalse
+			count: 1
+			path: includes/class-activator.php
+
+		-
+			message: '#^Call to an undefined method ActionScheduler_QueueRunner\:\:maybe_dispatch_async_request\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: includes/class-admin.php
+
+		-
+			message: '#^Comparison operation "\<\=" between int\<1, max\> and 0 is always false\.$#'
+			identifier: smallerOrEqual.alwaysFalse
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Constant ARRAY_A not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Constant DAY_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 3
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Constant HOUR_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Function as_schedule_single_action invoked with 6 parameters, 2\-4 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^If condition is always false\.$#'
+			identifier: if.alwaysFalse
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:auto_settle_albums\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:cleanup_idempotency_transients\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:delete_stale_failed_photos\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:delete_watermarked_file\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:enqueue_watermark_retry\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:find_stuck_watermark_jobs\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:maybe_delete_album\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:process_single_photo\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:recover_stuck_watermarking_photos\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:recover_uploaded_on_aborted\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:retrigger_failed_photos\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Cleanup_Scheduler\:\:scan_orphans\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Negated boolean expression is always false\.$#'
+			identifier: booleanNot.alwaysFalse
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^PHPDoc tag @var for constant Photolab\\Cleanup_Scheduler\:\:STUCK_THRESHOLD_SECONDS with type int is not subtype of value mixed\.$#'
+			identifier: classConstant.phpDocType
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Parameter \#1 \$array \(non\-empty\-list\<int\>\) of array_values is already a list, call has no effect\.$#'
+			identifier: arrayValues.list
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between null and int\|true will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Variable \$photo_ids in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 2
+			path: includes/class-cleanup-scheduler.php
+
+		-
+			message: '#^Method Photolab\\Database\:\:add_column_if_missing\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-database.php
+
+		-
+			message: '#^Method Photolab\\Database\:\:add_index_if_missing\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-database.php
+
+		-
+			message: '#^Variable \$installed on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.variable
+			count: 1
+			path: includes/class-database.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 3
+			path: includes/class-download-guard.php
+
+		-
+			message: '#^Constant DAY_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^If condition is always true\.$#'
+			identifier: if.alwaysTrue
+			count: 2
+			path: includes/class-logger.php
+
+		-
+			message: '#^Method Photolab\\Logger\:\:critical\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^Method Photolab\\Logger\:\:debug\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^Method Photolab\\Logger\:\:error\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^Method Photolab\\Logger\:\:info\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^Method Photolab\\Logger\:\:log\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^Method Photolab\\Logger\:\:resolve_context\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^Method Photolab\\Logger\:\:sanitize_context\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^Method Photolab\\Logger\:\:warning\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^Negated boolean expression is always false\.$#'
+			identifier: booleanNot.alwaysFalse
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^Offset ''basedir'' on array\{path\: string, url\: string, subdir\: string, basedir\: string, baseurl\: string, error\: string\|false\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: includes/class-logger.php
+
+		-
+			message: '#^Method Photolab\\Recovery_Scheduler\:\:remove_snapshot_safely\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-recovery-scheduler.php
+
+		-
+			message: '#^Method Photolab\\State_Machine\:\:build_transition_sql\(\) has parameter \$allowed_extra with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-state-machine.php
+
+		-
+			message: '#^Method Photolab\\State_Machine\:\:build_transition_sql\(\) has parameter \$extra_data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-state-machine.php
+
+		-
+			message: '#^Method Photolab\\State_Machine\:\:build_transition_sql\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-state-machine.php
+
+		-
+			message: '#^Method Photolab\\State_Machine\:\:transition_album\(\) has parameter \$extra_data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-state-machine.php
+
+		-
+			message: '#^Method Photolab\\State_Machine\:\:transition_photo\(\) has parameter \$extra_data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-state-machine.php
+
+		-
+			message: '#^Call to an undefined static method Imagick\:\:clearResources\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Call to function is_wp_error\(\) with int\<0, max\> will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 2
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Comparison operation "\<\=" between 0 and 0 is always true\.$#'
+			identifier: smallerOrEqual.alwaysTrue
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Method Photolab\\Watermark_Job\:\:bump_photo_retry_counter\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Method Photolab\\Watermark_Job\:\:cleanup_snapshot_file\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Method Photolab\\Watermark_Job\:\:generate_thumbnail_meta\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Method Photolab\\Watermark_Job\:\:maybe_finalise_album\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Method Photolab\\Watermark_Job\:\:notify_admin_failure\(\) has parameter \$photo_ids with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Method Photolab\\Watermark_Job\:\:process_batch\(\) has parameter \$photo_ids with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Method Photolab\\Watermark_Job\:\:process_batch_inner\(\) has parameter \$photo_ids with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Offset ''basedir'' on array\{path\: string, url\: string, subdir\: string, basedir\: string, baseurl\: string, error\: string\|false\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Offset ''baseurl'' on array\{path\: string, url\: string, subdir\: string, basedir\: string, baseurl\: string, error\: string\|false\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Offset ''height'' on array\{path\: string, file\: non\-falsy\-string, width\: int, height\: int, mime\-type\: string, filesize\: int\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 2
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Offset ''mime'' on array\{path\: string, file\: non\-falsy\-string, width\: int, height\: int, mime\-type\: string, filesize\: int\} on left side of \?\? does not exist\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Offset ''type'' on array\{ext\: string\|false, type\: string\|false\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Offset ''width'' on array\{path\: string, file\: non\-falsy\-string, width\: int, height\: int, mime\-type\: string, filesize\: int\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 2
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Result of \|\| is always true\.$#'
+			identifier: booleanOr.alwaysTrue
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between false and true will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: includes/class-watermark-job.php
+
+		-
+			message: '#^Method Photolab\\Watermark_Processor\:\:apply\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-watermark-processor.php
+
+		-
+			message: '#^Method Photolab\\Watermark_Processor\:\:apply_imagemagick_cli\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/class-watermark-processor.php
+
+		-
+			message: '#^Constant ARRAY_A not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: includes/rest/class-album-controller.php
+
+		-
+			message: '#^If condition is always false\.$#'
+			identifier: if.alwaysFalse
+			count: 1
+			path: includes/rest/class-album-controller.php
+
+		-
+			message: '#^Method Photolab\\Album_Controller\:\:cleanup_unwatermarked_photos\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/rest/class-album-controller.php
+
+		-
+			message: '#^Method Photolab\\Album_Controller\:\:delete_album_files\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/rest/class-album-controller.php
+
+		-
+			message: '#^PHPDoc tag @extends has invalid value \(\\WP_REST_Controller\)\: Unexpected token "\\n ", expected ''\<'' at offset 64 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: includes/rest/class-album-controller.php
+
+		-
+			message: '#^Constant ARRAY_A not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/rest/class-photo-controller.php
+
+		-
+			message: '#^Method Photolab\\Settings_Controller\:\:get_settings_inner\(\) never returns WP_Error so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: includes/rest/class-settings-controller.php
+
+		-
+			message: '#^PHPDoc tag @extends has invalid value \(\\WP_REST_Controller\)\: Unexpected token "\\n ", expected ''\<'' at offset 67 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: includes/rest/class-settings-controller.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\{term_id\: string, term_taxonomy_id\: string\} will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Call to function is_wp_error\(\) with int will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Call to function is_wp_error\(\) with int\<0, max\> will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Call to function is_wp_error\(\) with int\<min, 0\> will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Comparison operation "\>" between int\<1, max\> and 0 is always true\.$#'
+			identifier: greater.alwaysTrue
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Constant DAY_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Method Photolab\\Upload_Controller\:\:chunk_locked\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Method Photolab\\Upload_Controller\:\:cleanup_snapshot_file\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Method Photolab\\Upload_Controller\:\:normalise_files\(\) has parameter \$files_raw with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Method Photolab\\Upload_Controller\:\:process_single_file\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Method Photolab\\Upload_Controller\:\:process_single_file\(\) has parameter \$file with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Method Photolab\\Upload_Controller\:\:rollback_album\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Offset ''type'' on array\{ext\: string\|false, type\: string\|false\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^PHPDoc tag @extends has invalid value \(\\WP_REST_Controller\)\: Unexpected token "\\n ", expected ''\<'' at offset 65 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: includes/rest/class-upload-controller.php
+
+		-
+			message: '#^Method Photolab\\Watermark_Controller\:\:delete_inner\(\) never returns WP_Error so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: includes/rest/class-watermark-controller.php
+
+		-
+			message: '#^Offset ''type'' on array\{ext\: string\|false, type\: string\|false, proper_filename\: string\|false\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: includes/rest/class-watermark-controller.php
+
+		-
+			message: '#^PHPDoc tag @extends has invalid value \(\\WP_REST_Controller\)\: Unexpected token "\\n ", expected ''\<'' at offset 68 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: includes/rest/class-watermark-controller.php
+
+		-
+			message: '#^Right side of && is always true\.$#'
+			identifier: booleanAnd.rightAlwaysTrue
+			count: 1
+			path: includes/rest/class-watermark-controller.php
+
+		-
+			message: '#^Constant DAY_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: photolab.php
+
+		-
+			message: '#^Constant WEEK_IN_SECONDS not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: photolab.php
+
+		-
+			message: '#^If condition is always false\.$#'
+			identifier: if.alwaysFalse
+			count: 1
+			path: photolab.php

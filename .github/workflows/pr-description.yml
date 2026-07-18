@@ -1,0 +1,62 @@
+name: PR Description Generator
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    environment: photolab
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Generate or update PR description
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          PR_NUM=${{ github.event.pull_request.number }}
+          BODY=$(gh pr view "$PR_NUM" --json body --jq '.body // ""')
+
+          # Skip if body was manually edited (no longer has template sections)
+          if [ -n "$BODY" ] && ! echo "$BODY" | grep -q '## Type'; then
+            echo "::notice::PR body manually edited -- keeping existing content"
+            exit 0
+          fi
+
+          BASE_BRANCH="origin/${{ github.event.pull_request.base.ref }}"
+          COMMITS=$(git log "$BASE_BRANCH"..HEAD --format="- %s%n%b" | sed '/^$/d' | tail -30)
+
+          PROMPT="Write a GitHub PR description from these commits: $COMMITS\n\nSkip trivial commits (chore, wip, formatting). Focus on what changed and why.\n\nFormat:\n## Description\n\n**What**: one-line summary of the change\n**Why**: context or motivation\n**Affected area**: upload / watermark / database / rest-api / admin-ui / fsm / cleanup / ci-cd / core\n\nIf noteworthy: **Breaking changes**: yes/no -- describe if yes."
+
+          PAYLOAD=$(jq -n --arg prompt "$PROMPT" '{
+            model: "deepseek-chat",
+            messages: [{role: "user", content: $prompt}],
+            stream: false,
+            max_tokens: 1500
+          }')
+
+          DESCRIPTION=$(curl -s https://api.deepseek.com/chat/completions \
+            -H "Authorization: Bearer $DEEPSEEK_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD" | jq -r '.choices[0].message.content // empty')
+
+          if [ -z "$DESCRIPTION" ]; then
+            echo "::warning::Failed to generate PR description, keeping existing body"
+            exit 0
+          fi
+
+          # Preserve Type and Checklist sections from existing body
+          if echo "$BODY" | grep -q '## Type'; then
+            TAIL=$(echo "$BODY" | awk '/^## Type$/,0')
+            NEW_BODY=$(printf "%s\n\n%s" "$DESCRIPTION" "$TAIL")
+          else
+            NEW_BODY="$DESCRIPTION"
+          fi
+
+          gh pr edit "$PR_NUM" --body "$NEW_BODY"

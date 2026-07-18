@@ -1,0 +1,51 @@
+name: Build ZIP
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: composer
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: composer install --no-dev
+      - run: npm ci && npm run build:css
+      - name: Build ZIP
+        run: |
+          zip -r photolab.zip . \
+            -x ".git/*" \
+            -x ".github/*" \
+            -x "node_modules/*" \
+            -x "tests/*" \
+            -x "vendor/bin/*" \
+            -x "composer.*" \
+            -x "package*" \
+            -x "tailwind.config.js" \
+            -x "phpstan*" \
+            -x "phpunit*" \
+            -x "docs/*" \
+            -x "bin/*" \
+            -x ".env.testing" \
+            -x ".gitignore"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: photolab
+          path: photolab.zip
+      - name: Create Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: photolab.zip
+          generate_release_notes: true
+          make_latest: true

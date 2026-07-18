@@ -1,0 +1,3 @@
+*.php                               @photosync-team
+assets/js/*.js                      @photosync-team
+.github/workflows/*.yml             @photosync-team

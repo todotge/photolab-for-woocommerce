@@ -1,0 +1,134 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php:
+    name: PHP ${{ matrix.php }} — lint + test + static analysis
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name != 'pull_request'
+      || !contains(github.event.pull_request.labels.*.name, 'ci:skip')
+    strategy:
+      matrix:
+        php: ['8.2']
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer
+      - uses: reviewdog/action-setup@v1
+      - run: composer install
+
+      - name: PHPCS
+        run: composer run phpcs
+
+      - name: PHPCS (reviewdog)
+        if: github.event_name == 'pull_request' && matrix.php == '8.2'
+        run: |
+          ./vendor/bin/phpcs --standard=WordPress --report=checkstyle --warning-severity=0 --extensions=php includes/ templates/ photolab.php \
+            | reviewdog -f=checkstyle -reporter=github-pr-review -level=warning
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.github_token }}
+
+      - name: PHPStan
+        run: composer run phpstan
+
+      - name: PHPStan (reviewdog)
+        if: github.event_name == 'pull_request' && matrix.php == '8.2'
+        run: |
+          ./vendor/bin/phpstan analyse --memory-limit=2G --error-format=raw \
+            | reviewdog -f=phpstan -reporter=github-pr-review -level=error
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.github_token }}
+
+      - run: composer run test -- --testsuite unit
+
+  integration:
+    name: Integration tests (WP + WC)
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      checks: write
+      statuses: write
+      pull-requests: write
+    if: |
+      github.event_name == 'pull_request'
+      && github.event.pull_request.draft == false
+      && !contains(github.event.pull_request.labels.*.name, 'ci:skip')
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install composer dependencies
+        run: composer install --no-interaction
+
+      - name: Ensure test DB exists
+        run: mysql -u root -e "CREATE DATABASE IF NOT EXISTS wordpress_test"
+
+      - name: Verify image extensions
+        run: php -m | grep -E 'gd|imagick'
+
+      - name: Install WP test suite (cached, idempotent)
+        run: |
+          if [ ! -f /tmp/wordpress-tests-lib/includes/bootstrap.php ]; then
+            bash bin/install-wp-tests.sh wordpress_test root '' localhost latest
+          fi
+
+      - name: Patch WP test suite for PHPUnit 10 compatibility
+        run: |
+          if [ -f bin/patches/abstract-testcase-patched.php ]; then
+            cp bin/patches/abstract-testcase-patched.php \
+               /tmp/wordpress-tests-lib/includes/abstract-testcase.php
+          fi
+
+      - name: Run integration tests
+        run: vendor/bin/phpunit --testsuite integration --bootstrap tests/bootstrap-integration.php --log-junit junit.xml
+
+      - name: Publish test results
+        uses: dorny/test-reporter@v3
+        if: success() || failure()
+        with:
+          name: Integration Tests
+          path: junit.xml
+          reporter: java-junit
+          fail-on-error: false
+
+  css:
+    name: Tailwind build
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name != 'pull_request'
+      || !contains(github.event.pull_request.labels.*.name, 'ci:skip')
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - run: npm run build:css
+      - name: Verify CSS output
+        run: test -s assets/css/admin.css || { echo 'admin.css is empty or missing'; exit 1; }
