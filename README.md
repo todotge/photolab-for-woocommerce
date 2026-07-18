@@ -9,10 +9,10 @@ Photolab streamlines selling digital photos at scale. Upload thousands of photos
 ## Features
 
 ### Photo Management
-- **Bulk upload** — chunked uploads (5 files per chunk), supports 2,000+ photos per album
-- **Inline watermarking** — watermark applied during upload, no background queue drift; Imagick preferred, GD fallback
+- **Bulk upload** — supports 2,000+ photos per album
+- **watermarking** — watermark applied during upload, no background queue drift; Imagick preferred, GD fallback
 - **Album organization** — group photos into albums with price, watermark, and expiration date
-- **Deduplication** — SHA-256 hash check prevents duplicate photos within the same album
+- **Deduplication** — prevents duplicate photos within the same album
 - **Configurable watermark** — full-width or bottom-right positioning, PNG upload, snapshot at album creation
 
 ### WooCommerce Integration
