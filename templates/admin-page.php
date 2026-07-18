@@ -303,7 +303,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- ── Footer ──────────────────────────────────────────────────────── -->
 <div class="max-w-7xl mx-auto mt-6 flex items-center justify-between px-2">
 	<p class="text-[13px] text-gray-400">
-		<?php esc_html_e( '', 'photolab' ); ?>
+		<?php esc_html_e( 'Made in Tenerife', 'photolab' ); ?>
 	</p>
 	<div class="flex items-center gap-4">
 		<a
