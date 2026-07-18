@@ -169,8 +169,8 @@ wp i18n make-pot photolab/ photolab/languages/photolab.pot --domain=photolab
 **Fix**: Photolab uses inline watermark — not applicable with async recovery.
 
 ### "Undefined constant 'WP_Error'"
-**Cause**: Corrupted `class-watermark-processor.php` — `true` replaced with `\WP_Error` by aggressive regex.  
-**Fix**: Restore from `photolab_bomba.zip`.
+**Cause**: Corrupted `class-watermark-processor.php`.  
+**Fix**: Reinstall the plugin from a fresh download.
 
 ### "You do not have permission to access this album"
 **Cause**: Album created by a different user (user_id mismatch).  

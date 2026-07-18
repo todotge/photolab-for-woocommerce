@@ -137,6 +137,6 @@ class ActivatorTest extends TestCase {
 		ob_start();
 		Activator::show_activation_errors();
 		$output = ob_get_clean();
-		$this->assertStringContainsString( 'Photolab non può essere attivato', $output );
+		$this->assertStringContainsString( 'Photolab could not be activated', $output );
 	}
 }
