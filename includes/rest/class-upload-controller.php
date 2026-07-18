@@ -732,7 +732,7 @@ class Upload_Controller extends \WP_REST_Controller {
 
 		// Disable slow third-party hooks during batch; restore after.
 		global $wp_filter;
-		// ponytail: save/restore instead of permanent remove_all_filters.
+		// save/restore instead of permanent remove_all_filters.
 		$saved_wc_hook = $wp_filter['woocommerce_after_product_object_save'] ?? null;
 		remove_all_filters( 'woocommerce_after_product_object_save' );
 
@@ -1327,7 +1327,7 @@ class Upload_Controller extends \WP_REST_Controller {
 		// Step f: inline watermark — apply, insert into Media Library, attach
 		// to product, and advance photo to `watermarked`. Runs right inside the
 		// chunk request so there's no AS dependency.
-		// ponytail: CAS guards cover all race conditions; no external queue needed.
+		// CAS guards cover all race conditions; no external queue needed.
 		$watermarked_dir = "{$base}/watermarked/{$safe_album}";
 		wp_mkdir_p( $watermarked_dir );
 

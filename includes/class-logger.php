@@ -384,7 +384,7 @@ class Logger {
 			return $context;
 		}
 
-		// ponytail: single-pass preg_match replaces O(n*m) nested loop.
+		// single-pass preg_match replaces O(n*m) nested loop.
 		$pattern = '/' . implode( '|', array_map( static fn( $h ) => preg_quote( $h, '/' ), $hints ) ) . '/i';
 
 		foreach ( $context as $key => $value ) {

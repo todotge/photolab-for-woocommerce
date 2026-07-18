@@ -724,7 +724,7 @@ class Cleanup_Scheduler {
 			'logs_deleted'      => 0,
 		);
 
-		// ponytail: foreach instead of 2 identical try/catch blocks.
+		// foreach instead of 2 identical try/catch blocks.
 		foreach ( array(
 			array( 'find_stuck_watermark_jobs', 'stuck_jobs', '§6.1.1' ),
 			array( 'cleanup_idempotency_transients', 'transients_purged', '§6.1.4' ),
@@ -1467,7 +1467,7 @@ class Cleanup_Scheduler {
 			return;
 		}
 
-		// ponytail: batches of 2 to stay within AS 300s HTTP timeout.
+		// batches of 2 to stay within AS 300s HTTP timeout.
 		$batch_size = (int) apply_filters( 'photolab_watermark_batch_size', 2 );
 		foreach ( array_chunk( $photo_ids, $batch_size ) as $chunk ) {
 			$action_id = as_schedule_single_action(

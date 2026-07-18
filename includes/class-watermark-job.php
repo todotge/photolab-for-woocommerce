@@ -182,7 +182,7 @@ class Watermark_Job {
 		$photos_table   = $wpdb->prefix . 'Photolab_photos';
 		$last_exception = null;
 
-		// ponytail: register shutdown handler that CAS watermarking→failed on
+		// register shutdown handler that CAS watermarking→failed on
 		// fatal errors (E_ERROR from memory_limit). try/catch cannot catch PHP
 		// fatals; this is the only way to mark the current photo as failed and
 		// avoid permanent stuck state. Raw SQL because State_Machine may not
@@ -306,7 +306,7 @@ class Watermark_Job {
 				// Skipping the other 8-10 sizes saves ~50s per photo.
 				self::generate_thumbnail_meta( (int) $attachment_id, $wm_full_path );
 
-				// ponytail: clear Imagick global pixel cache without reloading the file.
+				// clear Imagick global pixel cache without reloading the file.
 				if ( class_exists( '\Imagick' ) && method_exists( '\Imagick', 'clearResources' ) ) {
 					try {
 						\Imagick::clearResources();

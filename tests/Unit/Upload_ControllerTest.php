@@ -349,7 +349,7 @@ class Upload_ControllerTest extends TestCase {
 		$GLOBALS['wpdb'] = $orig;
 		unset( $_FILES['files'] );
 
-		// ponytail: chunk con stesso SHA256 dovrebbe skippare; mock non replica logica reale — 
+		// chunk con stesso SHA256 dovrebbe skippare; mock non replica logica reale — 
 		// verifichiamo solo che non crasha. Test reale in integration.
 		$this->assertIsObject( $result );
 	}

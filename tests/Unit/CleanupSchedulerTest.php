@@ -40,7 +40,7 @@ class CleanupSchedulerTest extends TestCase {
 		$this->assertFalse( $threw );
 	}
 
-	// ponytail: test_ensure_first_action_skips_when_pending deleted — duplicato funzionale, primo test già copre
+	// test_ensure_first_action_skips_when_pending deleted — duplicato funzionale, primo test già copre
 
 	public function test_schedule_next_creates_with_interval(): void {
 		$threw = false;
@@ -215,7 +215,7 @@ class CleanupSchedulerTest extends TestCase {
 
 		$this->invoke_process_single_photo( new Cleanup_Scheduler(), $photo );
 
-		// ponytail: wpdb restore unreachable after expectException — leak innocuo, ogni test mocka il proprio
+		// wpdb restore unreachable after expectException — leak innocuo, ogni test mocka il proprio
 	}
 
 	// -------------------------------------------------------------------------

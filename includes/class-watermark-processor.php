@@ -92,7 +92,7 @@ class Watermark_Processor {
 					$watermark->destroy();
 				}
 
-				// ponytail: preserve original format (JPEG→lossy, PNG/GIF→lossless).
+				// preserve original format (JPEG→lossy, PNG/GIF→lossless).
 				$source_format = strtolower( $imagick->getImageFormat() );
 				$is_lossy      = in_array( $source_format, array( 'jpeg', 'jpg', 'webp' ), true );
 

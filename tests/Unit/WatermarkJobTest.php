@@ -97,7 +97,7 @@ class WatermarkJobTest extends TestCase {
 	 * Helper: create a wpdb replacement that returns album and photo rows for
 	 * process_batch tests, and records every query() call for later inspection.
 	 */
-	// ponytail: optional arg keeps existing callers working.
+	// optional arg keeps existing callers working.
 	private function make_wpdb_for_batch( string $source_url = '' ): object {
 		$tracker = new \stdClass();
 		$tracker->queries = array();

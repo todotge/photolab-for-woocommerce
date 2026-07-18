@@ -67,5 +67,5 @@ class MainPluginTest extends TestCase {
 		$this->assertStringContainsString( 'Photolab requires WooCommerce', $output );
 	}
 
-	// ponytail: test_action_scheduler_* tests deleted — testavano closure auto-referenziali, zero coverage reale
+	// test_action_scheduler_* tests deleted — testavano closure auto-referenziali, zero coverage reale
 }

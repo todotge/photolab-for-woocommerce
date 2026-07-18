@@ -377,7 +377,7 @@ class Album_Controller extends \WP_REST_Controller {
 		$deleted_photos   = 0;
 		$deleted_products = 0;
 
-		// ponytail: process photos in batches to avoid timeout on 2000+ albums.
+		// process photos in batches to avoid timeout on 2000+ albums.
 		$offset = 0;
 		$limit  = 100;
 
@@ -620,7 +620,7 @@ class Album_Controller extends \WP_REST_Controller {
 			array( 'aborted_at' => null )
 		);
 
-		// ponytail: also allow reset from watermarking (stuck mid-batch).
+		// also allow reset from watermarking (stuck mid-batch).
 		if ( ! $transitioned ) {
 			$transitioned = $fsm->transition_album(
 				$id,

@@ -199,7 +199,7 @@ class Recovery_Scheduler {
 		);
 
 		// G1 — Recover albums stuck in `deleting` for more than 1 hour.
-		// ponytail: uses created_at as proxy; CAS fails if delete still running.
+		// uses created_at as proxy; CAS fails if delete still running.
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 		$stuck_deleting = $wpdb->get_results(
 			$wpdb->prepare(
@@ -241,7 +241,7 @@ class Recovery_Scheduler {
 				);
 
 				if ( ! $transitioned ) {
-					// ponytail: also recover albums stuck in `deleting`.
+					// also recover albums stuck in `deleting`.
 					$transitioned = $fsm->transition_album(
 						$album_id,
 						State_Machine::ALBUM_DELETING,
