@@ -1674,9 +1674,7 @@ class Cleanup_Scheduler {
 					if ( false !== $real_snap && false !== $real_assets
 						&& str_starts_with( $real_snap, $real_assets )
 					) {
-						// phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink
-						// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-						unlink( $snapshot );
+						wp_delete_file( $snapshot );
 					}
 				}
 				delete_option( "photolab_album_{$album_id}_price" );

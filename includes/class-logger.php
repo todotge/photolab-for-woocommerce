@@ -309,9 +309,7 @@ class Logger {
 				continue;
 			}
 
-			// phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink
-			if ( // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-			unlink( $path ) ) {
+		if ( wp_delete_file( $path ) ) {
 				++$deleted;
 			} else {
 				self::log(
