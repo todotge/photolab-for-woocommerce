@@ -397,12 +397,6 @@ parameters:
 			path: includes/class-watermark-processor.php
 
 		-
-			message: '#^Method Photolab\\Watermark_Processor\:\:apply_imagemagick_cli\(\) has parameter \$context with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: includes/class-watermark-processor.php
-
-		-
 			message: '#^Constant ARRAY_A not found\.$#'
 			identifier: constant.notFound
 			count: 2

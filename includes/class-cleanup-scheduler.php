@@ -563,9 +563,9 @@ class Cleanup_Scheduler {
 
 			foreach ( $files as $file ) {
 				$file_path = $file->getRealPath();
-			if ( $file->isDir() ) {
-				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir
-				rmdir( $file_path );
+				if ( $file->isDir() ) {
+					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir
+					rmdir( $file_path );
 				} else {
 					// phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink
 					unlink( $file_path );
@@ -573,7 +573,7 @@ class Cleanup_Scheduler {
 			}
 
 			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir
-		if ( ! rmdir( $dir ) ) {
+			if ( ! rmdir( $dir ) ) {
 				Logger::warning(
 					sprintf( 'Cleanup_Scheduler — impossibile rimuovere dir: %s', $dir ),
 					$context

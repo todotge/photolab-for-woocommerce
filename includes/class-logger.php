@@ -309,7 +309,7 @@ class Logger {
 				continue;
 			}
 
-		if ( wp_delete_file( $path ) ) {
+			if ( wp_delete_file( $path ) ) {
 				++$deleted;
 			} else {
 				self::log(

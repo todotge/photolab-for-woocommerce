@@ -164,11 +164,11 @@ class Watermark_Processor {
 
 				// Resize to max 1200px wide before watermark composition (same
 				// rationale as the Imagick path above).
-				$photo_w   = imagesx( $base );
-				$photo_h   = imagesy( $base );
+				$photo_w = imagesx( $base );
+				$photo_h = imagesy( $base );
 				if ( $photo_w > 1200 ) {
-					$new_w = 1200;
-					$new_h = (int) ( $photo_h * ( 1200 / $photo_w ) );
+					$new_w   = 1200;
+					$new_h   = (int) ( $photo_h * ( 1200 / $photo_w ) );
 					$resized = imagecreatetruecolor( $new_w, $new_h );
 					if ( false !== $resized ) {
 						imagecopyresampled( $resized, $base, 0, 0, 0, 0, $new_w, $new_h, $photo_w, $photo_h );
