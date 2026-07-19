@@ -27,18 +27,28 @@ jobs:
           zip -r photolab.zip . \
             -x ".git/*" \
             -x ".github/*" \
+            -x ".looper/*" \
             -x "node_modules/*" \
             -x "tests/*" \
-            -x "vendor/bin/*" \
+            -x "vendor/*" \
+            -x "bin/*" \
+            -x "stubs/*" \
+            -x "docs/*" \
             -x "composer.*" \
             -x "package*" \
             -x "tailwind.config.js" \
             -x "phpstan*" \
             -x "phpunit*" \
-            -x "docs/*" \
-            -x "bin/*" \
             -x ".env.testing" \
-            -x ".gitignore"
+            -x ".gitignore" \
+            -x ".phpunit.cache/*" \
+            -x "*.md" \
+            -x "CODE_OF_CONDUCT.md" \
+            -x "CONTRIBUTING.md" \
+            -x "SECURITY.md" \
+            -x "CHANGELOG.md" \
+            -x "AGENTS.md" \
+            -x "CLAUDE.md"
       - uses: actions/upload-artifact@v7
         with:
           name: photolab
