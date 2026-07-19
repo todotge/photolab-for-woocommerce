@@ -1,5 +1,7 @@
 # Photolab for WooCommerce
 
+<img src="docs/assets/photolab_p.png" alt="Photolab for WooCommerce">
+
 **Bulk photo album management and sales plugin for WordPress + WooCommerce**
 
 Photolab streamlines selling digital photos at scale. Upload thousands of photos in batches, apply watermarks inline, and publish each as a downloadable WooCommerce product — all from a single admin panel. Built for event photographers, photo studios, and anyone selling large galleries online.

@@ -8,3 +8,4 @@ graphify-out
 .env
 .phpunit.result.cache
 .phpunit.cache
+*~

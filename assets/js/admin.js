@@ -365,7 +365,7 @@
 		if ( elSaveWatermarkBtn ) elSaveWatermarkBtn.hidden = false;
 
 		if ( active && elWatermarkPreview ) {
-			elWatermarkPreview.src = state.watermark.url;
+			elWatermarkPreview.src = state.watermark.url + '?t=' + Date.now();
 		}
 	}
 
