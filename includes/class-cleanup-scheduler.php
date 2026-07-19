@@ -567,8 +567,7 @@ class Cleanup_Scheduler {
 					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir
 					rmdir( $file_path );
 				} else {
-					// phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink
-					unlink( $file_path );
+					wp_delete_file( $file_path );
 				}
 			}
 
@@ -647,8 +646,7 @@ class Cleanup_Scheduler {
 			return;
 		}
 
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink
-		if ( ! unlink( $abs_path ) ) {
+		if ( ! wp_delete_file( $abs_path ) ) {
 			$msg = sprintf( 'Impossibile eliminare file watermark: %s', $abs_path );
 			throw new \RuntimeException( $msg ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
