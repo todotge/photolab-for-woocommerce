@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Photolab
+ * Plugin Name:       Photolab for WooCommerce
  * Plugin URI:        https://todot.it
  * Description:       Gestione e vendita massiva di album fotografici su WooCommerce.
  * Version:           0.0.5

@@ -719,12 +719,14 @@ class Album_Controller extends \WP_REST_Controller {
 				$file_path = $file->getRealPath();
 
 				if ( $file->isDir() ) {
+					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir
 					if ( ! rmdir( $file_path ) ) {
 						Logger::warning(
 							sprintf( 'Album_Controller::delete_album_files() — impossibile rimuovere dir: %s', $file_path ),
 							$context
 						);
 					}
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink
 				} elseif ( ! unlink( $file_path ) ) {
 						Logger::warning(
 							sprintf( 'Album_Controller::delete_album_files() — impossibile eliminare file: %s', $file_path ),
@@ -734,6 +736,7 @@ class Album_Controller extends \WP_REST_Controller {
 			}
 
 			// Remove the now-empty album directory.
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir
 			if ( ! rmdir( $dir ) ) {
 				Logger::warning(
 					sprintf( 'Album_Controller::delete_album_files() — impossibile rimuovere dir principale: %s', $dir ),

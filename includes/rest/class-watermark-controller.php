@@ -201,7 +201,7 @@ class Watermark_Controller extends \WP_REST_Controller {
 		}
 
 		// Move uploaded file — overwrite existing watermark.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput,Generic.PHP.ForbiddenFunctions.Found
 		if ( ! move_uploaded_file( $_FILES['watermark']['tmp_name'], $dest_path ) ) {
 			Logger::error( "Watermark_Controller::upload() — impossibile spostare il file in $dest_path.", $context );
 

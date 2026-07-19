@@ -1,8 +1,8 @@
 === Photolab for WooCommerce ===
 Contributors: photolabdev
-Tags: woocommerce, photos, gallery, watermark, digital downloads, bulk upload, photo sales
+Tags: woocommerce, photos, watermark, bulk upload, digital downloads
 Requires at least: 6.5
-Tested up to: 6.7
+Tested up to: 7.0
 Stable tag: 0.0.5
 Requires PHP: 8.1
 License: GPLv2 or later
