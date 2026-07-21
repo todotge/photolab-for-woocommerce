@@ -111,12 +111,12 @@ class Cleanup_Scheduler {
 			return;
 		}
 
-		if ( as_has_scheduled_action( $hook, array(), 'photolab' ) ) {
+		if ( as_has_scheduled_action( $hook, array(), 'todot-photolab' ) ) {
 			return;
 		}
 
 		$when      = $first_run ?? time();
-		$action_id = as_schedule_single_action( $when, $hook, array(), 'photolab' );
+		$action_id = as_schedule_single_action( $when, $hook, array(), 'todot-photolab' );
 
 		if ( ! $action_id ) {
 			Logger::error(
@@ -150,7 +150,7 @@ class Cleanup_Scheduler {
 			return;
 		}
 
-		$action_id = as_schedule_single_action( time() + $interval, $hook, array(), 'photolab' );
+		$action_id = as_schedule_single_action( time() + $interval, $hook, array(), 'todot-photolab' );
 
 		if ( ! $action_id ) {
 			Logger::error(
@@ -172,7 +172,7 @@ class Cleanup_Scheduler {
 			return;
 		}
 
-		as_unschedule_all_actions( self::HOOK, array(), 'photolab' );
+		as_unschedule_all_actions( self::HOOK, array(), 'todot-photolab' );
 
 		Logger::info(
 			'Cleanup_Scheduler::unschedule() — job rimosso.',
@@ -210,7 +210,7 @@ class Cleanup_Scheduler {
 			return;
 		}
 
-		as_unschedule_all_actions( self::DAILY_HOOK, array(), 'photolab' );
+		as_unschedule_all_actions( self::DAILY_HOOK, array(), 'todot-photolab' );
 
 		Logger::info(
 			'Cleanup_Scheduler::unschedule_daily() — daily cleanup rimosso.',

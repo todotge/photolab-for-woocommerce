@@ -116,8 +116,8 @@ class Download_Guard {
 					array( 'source' => self::SOURCE )
 				);
 				wp_die(
-					esc_html__( 'This photo is still being processed. Please check back in a moment.', 'photolab' ),
-					esc_html__( 'Photo not ready', 'photolab' ),
+					esc_html__( 'This photo is still being processed. Please check back in a moment.', 'todot-photolab' ),
+					esc_html__( 'Photo not ready', 'todot-photolab' ),
 					array( 'response' => 425 )
 				);
 				// Unreachable.
@@ -135,8 +135,8 @@ class Download_Guard {
 					array( 'source' => self::SOURCE )
 				);
 				wp_die(
-					esc_html__( 'This photo is no longer available.', 'photolab' ),
-					esc_html__( 'Photo unavailable', 'photolab' ),
+					esc_html__( 'This photo is no longer available.', 'todot-photolab' ),
+					esc_html__( 'Photo unavailable', 'todot-photolab' ),
 					array( 'response' => 410 )
 				);
 				// Unreachable.
@@ -153,8 +153,8 @@ class Download_Guard {
 					array( 'source' => self::SOURCE )
 				);
 				wp_die(
-					esc_html__( 'This photo is no longer available.', 'photolab' ),
-					esc_html__( 'Photo unavailable', 'photolab' ),
+					esc_html__( 'This photo is no longer available.', 'todot-photolab' ),
+					esc_html__( 'Photo unavailable', 'todot-photolab' ),
 					array( 'response' => 410 )
 				);
 				// Unreachable.

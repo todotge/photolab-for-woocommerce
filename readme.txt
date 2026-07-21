@@ -1,5 +1,5 @@
-=== Photolab for WooCommerce ===
-Contributors: photolabdev
+=== Todot Photolab for WooCommerce ===
+Contributors: todotweb
 Tags: woocommerce, photos, watermark, bulk upload, digital downloads
 Requires at least: 6.5
 Tested up to: 7.0
@@ -58,12 +58,10 @@ The `wp-content/uploads/Photolab/photos/` directory is protected via an `.htacce
 
 If using **Nginx**, `.htaccess` files are not read. Add a rule to your server block to protect the directory:
 
-```
-location ~* /wp-content/uploads/Photolab/photos/ {
+<pre><code>location ~* /wp-content/uploads/Photolab/photos/ {
     deny all;
     return 403;
-}
-```
+}</code></pre>
 
 Consult your hosting provider documentation to apply this configuration.
 
@@ -120,6 +118,12 @@ Yes. Photolab does not access `wp_posts` directly for WooCommerce products and i
 = Where do I find the logs? =
 
 In **WooCommerce → Status → Logs**, filter by source `photolab*`. Available sources: `photolab`, `photolab-fsm`, `photolab-upload`, `photolab-heartbeat`, `photolab-recovery`, `photolab-watermark-job`, `photolab-rate-limit`, `photolab-ownership`, `photolab-download-guard`, `photolab-idempotency`, `photolab-cleanup`, `photolab-lock`, `photolab-logger`. Each entry automatically includes `user_id`, `album_id`, and other contextual keys. Sensitive data (passwords, tokens, emails) is automatically redacted.
+
+== Screenshots ==
+
+1. Admin panel — create an album, upload photos, set price and expiration.
+2. Galleries status — track all albums, expiration dates, and per-album photo counts.
+3. Upload complete — photos saved and ready, watermarking done.
 
 == Changelog ==
 

@@ -77,6 +77,10 @@ if ( ! function_exists( 'add_filter' ) ) {
 	function add_filter( $tag, $callable, $priority = 10, $accepted_args = 1 ) {}
 }
 
+if ( ! function_exists( 'remove_filter' ) ) {
+	function remove_filter( $tag, $callable, $priority = 10 ) {}
+}
+
 if ( ! function_exists( '__' ) ) {
 	function __( $t, $d = '' ) { return $t; }
 }

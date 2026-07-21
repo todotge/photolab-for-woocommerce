@@ -72,7 +72,7 @@ class Settings_Controller extends \WP_REST_Controller {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new \WP_Error(
 				'photolab_forbidden',
-				__( 'Access denied.', 'photolab' ),
+				__( 'Access denied.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}

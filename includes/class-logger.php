@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Static logging facade used throughout the Photolab plugin.
  *
- * Every log entry automatically receives 'source' => 'photolab' unless an
+ * Every log entry automatically receives 'source' => 'todot-photolab' unless an
  * alternative source is supplied in $context. Callers can also push request-
  * scoped context (user_id, album_id, …) via {@see self::set_context()} so
  * downstream Logger calls inherit it without repeating the values.
@@ -36,7 +36,7 @@ class Logger {
 	 *
 	 * @var string
 	 */
-	const SOURCE = 'photolab';
+	const SOURCE = 'todot-photolab';
 
 	/**
 	 * Default log retention in days. Filterable via `photolab_log_retention_days`.

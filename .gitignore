@@ -10,3 +10,4 @@ graphify-out
 .phpunit.cache
 *~
 .looper
+AGENTS.md

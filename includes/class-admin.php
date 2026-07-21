@@ -49,10 +49,10 @@ class Admin {
 		$icon = 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDQwIDQwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiPgoJPHN0eWxlPgoJCS5zMCB7IGZpbGw6ICNmZWZlZmUgfSAKCTwvc3R5bGU+Cgk8ZyBpZD0iJmx0O0dyb3VwJmd0OyI+CgkJPHBhdGggaWQ9IiZsdDtQYXRoJmd0OyIgY2xhc3M9InMwIiBkPSJtMjQuOSAxMi45MnEwLjA2IDAuMDYgMC4xNCAwLjEyIDAuNTEgMC4zOCAxLjAxIDAuODcgMC40OSAwLjQ5IDAuODUgMC45OSAwLjA2IDAuMDggMC4xMiAwLjE0YzAuNTQgMC41NCAxLjQyIDAuNTQgMS45NiAwbDUuNzUtNS43NmMwLjMtMC4zIDAuNy0wLjQyIDEuMDktMC4zOS0wLjc4LTAuNTYtMS43My0wLjg5LTIuNzYtMC44OWgtMTMuMDh6Ii8+CgkJPHBhdGggaWQ9IiZsdDtQYXRoJmd0OyIgY2xhc3M9InMwIiBkPSJtMi41IDI4LjAybDIuMTItMi4xMyAwLjAyIDAuMDIgNC45My00Ljk0LTAuMDEtMC4wMSA0Ljk4LTQuOThxMS41OC0xLjU5IDIuNjItMi40OGMwLjYxLTAuNTMgMC42Ni0xLjQ2IDAuMDktMi4wM2wtMy40Ny0zLjQ3aC03LjAyYy0yLjYzIDAtNC43NiAyLjEzLTQuNzYgNC43NnYxNC4xNnEwIDAuNzggMC4yMyAxLjQ4IDAuMS0wLjIxIDAuMjctMC4zOHoiLz4KCQk8cGF0aCBpZD0iJmx0O1BhdGgmZ3Q7IiBjbGFzcz0iczAiIGQ9Im0yMy43NCAxOC43cS0wLjE2LTAuODctMC44NC0xLjU1LTAuODQtMC44NC0xLjg4LTAuODktMS4wMy0wLjA1LTEuOTIgMC41Ny0wLjY3IDAuNDUtMi4zNCAyLjEybC0wLjUyIDAuNTNjLTAuNTQgMC41NC0wLjU0IDEuNDEgMCAxLjk1bDIuNCAyLjQxYzAuNTQgMC41NCAxLjQyIDAuNTQgMS45NiAwbDAuNzItMC43M3ExLjgzLTEuODMgMi4yMS0yLjY5IDAuMzgtMC44NiAwLjIxLTEuNzJ6Ii8+CgkJPHBhdGggaWQ9IiZsdDtQYXRoJmd0OyIgY2xhc3M9InMwIiBkPSJtMTMuMTQgMjQuNTRjLTAuNTQtMC41NC0xLjQxLTAuNTQtMS45NSAwbC02LjA5IDYuMDhxLTAuMzQgMC4zMy0wLjc4IDAuMzljMC43MiAwLjQzIDEuNTUgMC42OCAyLjQ0IDAuNjhoMTMuNTN6Ii8+CgkJPHBhdGggaWQ9IiZsdDtQYXRoJmd0OyIgY2xhc3M9InMwIiBkPSJtMzcuNjIgMTEuNDJxLTAuMSAwLjI1LTAuMyAwLjQ1bC05LjgzIDkuODQtMC4wNi0wLjA2cS0wLjA5IDAuMTYtMC4xOCAwLjMxLTAuODkgMS4zMy0zIDMuNDRsLTEuMDQgMS4wNWMtMC41NCAwLjUzLTAuNTQgMS40MSAwIDEuOTVsMy4yOCAzLjI5aDYuNTdjMi42MyAwIDQuNzYtMi4xNCA0Ljc2LTQuNzd2LTE0LjE2cTAtMC43LTAuMi0xLjM0eiIvPgoJPC9nPgo8L3N2Zz4=';
 
 		add_menu_page(
-			__( 'Photolab', 'photolab' ),
-			__( 'Photolab', 'photolab' ),
+			__( 'Photolab', 'todot-photolab' ),
+			__( 'Photolab', 'todot-photolab' ),
 			'manage_options',
-			'photolab',
+			'todot-photolab',
 			array( $this, 'render_page' ),
 			$icon,
 			40
@@ -75,7 +75,7 @@ class Admin {
 	 * @return void
 	 */
 	public function enqueue_assets( string $hook_suffix ): void {
-		if ( 'toplevel_page_photolab' !== $hook_suffix ) {
+		if ( 'toplevel_page_todot-photolab' !== $hook_suffix ) {
 			return;
 		}
 
@@ -178,7 +178,7 @@ class Admin {
 	 */
 	public function render_page(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Access denied.', 'photolab' ) );
+			wp_die( esc_html__( 'Access denied.', 'todot-photolab' ) );
 		}
 
 		Logger::info( 'Admin::render_page() — rendering pagina admin.', array( 'source' => 'photolab-admin' ) );
@@ -209,7 +209,7 @@ class Admin {
 		echo '<div class="notice notice-error"><p>' .
 			esc_html__(
 				'Photolab richiede i Pretty Permalinks attivi. Abilita una struttura permalink diversa da "Normale" in Impostazioni → Permalink.',
-				'photolab'
+				'todot-photolab'
 			) .
 			'</p></div>';
 	}

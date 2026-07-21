@@ -46,7 +46,41 @@ class Admin_Notices {
 	 */
 	public static function init(): void {
 		add_action( 'admin_notices', array( static::class, 'render' ) );
+		add_action( 'admin_enqueue_scripts', array( static::class, 'enqueue_dismiss_script' ) );
 		add_action( 'wp_ajax_' . self::AJAX_ACTION, array( static::class, 'handle_dismiss' ) );
+	}
+
+	/**
+	 * Enqueue the dismiss-notice click handler as inline JS on the 'jquery'
+	 * handle (already registered on every admin page, so no extra script file
+	 * is needed for these few lines).
+	 *
+	 * @return void
+	 */
+	public static function enqueue_dismiss_script(): void {
+		wp_enqueue_script( 'jquery' );
+
+		$ajax_action = wp_json_encode( self::AJAX_ACTION );
+
+		wp_add_inline_script(
+			'jquery',
+			"(function () {
+				document.addEventListener('click', function (e) {
+					var btn = e.target.closest('.photolab-notice .notice-dismiss');
+					if (!btn) return;
+
+					var notice = btn.closest('.photolab-notice');
+					if (!notice) return;
+
+					var data = new FormData();
+					data.append('action', {$ajax_action});
+					data.append('slug', notice.dataset.slug);
+					data.append('nonce', notice.dataset.nonce);
+
+					fetch(ajaxurl, { method: 'POST', body: data });
+				});
+			}());"
+		);
 	}
 
 	/**
@@ -98,8 +132,8 @@ class Admin_Notices {
 	/**
 	 * Render all stored notices in the WordPress admin area.
 	 *
-	 * Hooked to admin_notices. Outputs standard WP dismissible notice markup
-	 * and inline JS to send the AJAX dismiss request.
+	 * Hooked to admin_notices. Outputs standard WP dismissible notice markup;
+	 * the dismiss click handler is enqueued separately via enqueue_dismiss_script().
 	 *
 	 * @return void
 	 */
@@ -127,28 +161,6 @@ class Admin_Notices {
 				esc_html( $message )
 			);
 		}
-
-		// Inline JS — send AJAX dismiss on WP's native dismiss button click.
-		?>
-		<script>
-		(function () {
-			document.addEventListener('click', function (e) {
-				var btn = e.target.closest('.photolab-notice .notice-dismiss');
-				if (!btn) return;
-
-				var notice = btn.closest('.photolab-notice');
-				if (!notice) return;
-
-				var data = new FormData();
-				data.append('action', '<?php echo esc_js( self::AJAX_ACTION ); ?>');
-				data.append('slug', notice.dataset.slug);
-				data.append('nonce', notice.dataset.nonce);
-
-				fetch(ajaxurl, { method: 'POST', body: data });
-			});
-		}());
-		</script>
-		<?php
 	}
 
 	/**

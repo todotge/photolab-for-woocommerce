@@ -100,7 +100,7 @@ class Recovery_Scheduler {
 		$migrated_key = 'photolab_scheduler_migrated_' . self::HOOK;
 		if ( ! get_option( $migrated_key ) ) {
 			if ( function_exists( 'as_unschedule_all_actions' ) ) {
-				as_unschedule_all_actions( self::HOOK, array(), 'photolab' );
+				as_unschedule_all_actions( self::HOOK, array(), 'todot-photolab' );
 				update_option( $migrated_key, true, false );
 			}
 		}
@@ -120,7 +120,7 @@ class Recovery_Scheduler {
 			return;
 		}
 
-		as_unschedule_all_actions( self::HOOK, array(), 'photolab' );
+		as_unschedule_all_actions( self::HOOK, array(), 'todot-photolab' );
 
 		Logger::info(
 			'Recovery_Scheduler::unschedule() — recovery scan rimosso.',

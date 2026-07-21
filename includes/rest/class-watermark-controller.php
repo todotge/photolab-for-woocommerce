@@ -107,7 +107,7 @@ class Watermark_Controller extends \WP_REST_Controller {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new \WP_Error(
 				'photolab_forbidden',
-				__( 'Access denied.', 'photolab' ),
+				__( 'Access denied.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -159,7 +159,7 @@ class Watermark_Controller extends \WP_REST_Controller {
 
 			return new \WP_Error(
 				'photolab_missing_file',
-				__( 'File watermark mancante o corrotto.', 'photolab' ),
+				__( 'File watermark mancante o corrotto.', 'todot-photolab' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -175,42 +175,49 @@ class Watermark_Controller extends \WP_REST_Controller {
 
 			return new \WP_Error(
 				'photolab_invalid_type',
-				__( 'Il watermark deve essere un file PNG.', 'photolab' ),
+				__( 'Il watermark deve essere un file PNG.', 'todot-photolab' ),
 				array( 'status' => 415 )
 			);
 		}
 
-		// Resolve destination path: wp-content/uploads/Photolab/assets/watermark.png.
-		$upload_basedir = wp_upload_dir()['basedir'];
-		$assets_dir     = trailingslashit( $upload_basedir ) . 'Photolab/assets';
-		$dest_path      = $assets_dir . '/watermark.png';
+		// Destination: wp-content/uploads/Photolab/assets/watermark.png.
+		// Redirect wp_handle_upload() there via the upload_dir filter, and force
+		// the fixed filename so every re-upload overwrites the same file.
+		$redirect_assets_dir = static function ( array $dirs ): array {
+			$dirs['subdir'] = '/Photolab/assets';
+			$dirs['path']   = $dirs['basedir'] . $dirs['subdir'];
+			$dirs['url']    = $dirs['baseurl'] . $dirs['subdir'];
+			return $dirs;
+		};
+		$fixed_filename      = static function () {
+			return 'watermark.png';
+		};
 
-		// Create assets/ directory if absent — no .htaccess block here (public for preview).
-		if ( ! is_dir( $assets_dir ) ) {
-			if ( ! wp_mkdir_p( $assets_dir ) ) {
-				Logger::error( "Watermark_Controller::upload() — impossibile creare directory assets: $assets_dir.", $context );
-
-				return new \WP_Error(
-					'photolab_dir_error',
-					__( 'Unable to create assets directory. Check filesystem permissions.', 'photolab' ),
-					array( 'status' => 500 )
-				);
-			}
-
-			Logger::info( "Watermark_Controller::upload() — creata directory assets: $assets_dir.", $context );
+		if ( ! function_exists( 'wp_handle_upload' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
 		}
 
-		// Move uploaded file — overwrite existing watermark.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput,Generic.PHP.ForbiddenFunctions.Found
-		if ( ! move_uploaded_file( $_FILES['watermark']['tmp_name'], $dest_path ) ) {
-			Logger::error( "Watermark_Controller::upload() — impossibile spostare il file in $dest_path.", $context );
+		add_filter( 'upload_dir', $redirect_assets_dir );
+		$overrides = array(
+			'test_form'                => false,
+			'unique_filename_callback' => $fixed_filename,
+			'mimes'                    => array( 'png' => 'image/png' ),
+		);
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput
+		$moved = wp_handle_upload( $_FILES['watermark'], $overrides );
+		remove_filter( 'upload_dir', $redirect_assets_dir );
+
+		if ( isset( $moved['error'] ) ) {
+			Logger::error( "Watermark_Controller::upload() — wp_handle_upload() fallito: {$moved['error']}.", $context );
 
 			return new \WP_Error(
 				'photolab_move_failed',
-				__( 'Impossibile salvare il file watermark.', 'photolab' ),
+				__( 'Impossibile salvare il file watermark.', 'todot-photolab' ),
 				array( 'status' => 500 )
 			);
 		}
+
+		$dest_path = $moved['file'];
 
 		// Persist options — not needed on every admin page, so autoload=false.
 		$watermark_url = trailingslashit( wp_upload_dir()['baseurl'] ) . 'Photolab/assets/watermark.png';

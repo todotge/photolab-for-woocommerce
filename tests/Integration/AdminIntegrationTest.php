@@ -29,7 +29,7 @@ class AdminIntegrationTest extends WP_UnitTestCase {
 
 		$found = false;
 		foreach ( $menu as $item ) {
-			if ( isset( $item[2] ) && str_contains( (string) $item[2], 'photolab' ) ) {
+			if ( isset( $item[2] ) && str_contains( (string) $item[2], 'todot-photolab' ) ) {
 				$found = true;
 				break;
 			}
@@ -40,7 +40,7 @@ class AdminIntegrationTest extends WP_UnitTestCase {
 	public function test_enqueue_assets_on_photolab_page(): void {
 		global $wp_scripts, $wp_styles;
 
-		$this->admin->enqueue_assets( 'toplevel_page_photolab' );
+		$this->admin->enqueue_assets( 'toplevel_page_todot-photolab' );
 
 		$styles_queue = $wp_styles->queue ?? array();
 		$scripts_queue = $wp_scripts->queue ?? array();
@@ -48,13 +48,13 @@ class AdminIntegrationTest extends WP_UnitTestCase {
 		$has_css = false;
 		$has_js  = false;
 		foreach ( $styles_queue as $handle ) {
-			if ( str_contains( (string) $handle, 'photolab' ) ) {
+			if ( str_contains( (string) $handle, 'todot-photolab' ) ) {
 				$has_css = true;
 				break;
 			}
 		}
 		foreach ( $scripts_queue as $handle ) {
-			if ( str_contains( (string) $handle, 'photolab' ) ) {
+			if ( str_contains( (string) $handle, 'todot-photolab' ) ) {
 				$has_js = true;
 				break;
 			}
@@ -71,7 +71,7 @@ class AdminIntegrationTest extends WP_UnitTestCase {
 	}
 
 	public function test_enqueue_assets_passes_chunk_size_param(): void {
-		$this->admin->enqueue_assets( 'toplevel_page_photolab' );
+		$this->admin->enqueue_assets( 'toplevel_page_todot-photolab' );
 
 		global $wp_scripts;
 		$raw_data = $wp_scripts->get_data( 'photolab-admin', 'data' );

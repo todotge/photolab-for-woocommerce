@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Photolab for WooCommerce
+ * Plugin Name:       Todot Photolab for WooCommerce
  * Plugin URI:        https://todot.it
  * Description:       Gestione e vendita massiva di album fotografici su WooCommerce.
  * Version:           0.0.5
@@ -9,7 +9,7 @@
  * Author:            Photolab Team
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       photolab
+ * Text Domain:       todot-photolab
  * Domain Path:       /languages
  * WC requires at least: 8.0
  *
@@ -93,7 +93,7 @@ function photolab_plugins_loaded(): void {
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		Admin_Notices::add(
 			'wc-missing',
-			__( 'Photolab requires WooCommerce to be active. The plugin is disabled.', 'photolab' ),
+			__( 'Photolab requires WooCommerce to be active. The plugin is disabled.', 'todot-photolab' ),
 			'error'
 		);
 		add_action( 'admin_notices', __NAMESPACE__ . '\\photolab_notice_wc_missing' );
@@ -107,7 +107,7 @@ function photolab_plugins_loaded(): void {
 	if ( get_transient( 'photolab_gd_only_warning' ) ) {
 		Admin_Notices::add(
 			'gd-only',
-			__( 'Photolab: Imagick not available. GD in use. Reduced performance on large watermark volumes.', 'photolab' ),
+			__( 'Photolab: Imagick not available. GD in use. Reduced performance on large watermark volumes.', 'todot-photolab' ),
 			'warning'
 		);
 		delete_transient( 'photolab_gd_only_warning' );
@@ -148,7 +148,7 @@ function photolab_plugins_loaded(): void {
 					Recovery_Scheduler::HOOK,
 				) as $hook ) {
 					if ( function_exists( 'as_unschedule_all_actions' ) ) {
-						as_unschedule_all_actions( $hook, array(), 'photolab' );
+						as_unschedule_all_actions( $hook, array(), 'todot-photolab' );
 					}
 				}
 				update_option( 'photolab_scheduler_migrated_v1', true, false );
@@ -263,6 +263,6 @@ function photolab_log_security_audit(): void {
  */
 function photolab_notice_wc_missing(): void {
 	echo '<div class="notice notice-error"><p>' .
-		esc_html__( 'Photolab requires WooCommerce to be active. The plugin is disabled.', 'photolab' ) .
+		esc_html__( 'Photolab requires WooCommerce to be active. The plugin is disabled.', 'todot-photolab' ) .
 		'</p></div>';
 }

@@ -114,7 +114,7 @@ class Upload_Controller extends \WP_REST_Controller {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new \WP_Error(
 				'photolab_forbidden',
-				__( 'Access denied.', 'photolab' ),
+				__( 'Access denied.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -203,7 +203,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'too_many_uploads',
-				__( 'Maximum 3 concurrent uploads. Please wait for one to complete before starting a new one.', 'photolab' ),
+				__( 'Maximum 3 concurrent uploads. Please wait for one to complete before starting a new one.', 'todot-photolab' ),
 				array( 'status' => 429 )
 			);
 		}
@@ -235,7 +235,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'album_uploading',
-				__( 'An album with this name is already being uploaded. Please wait for it to complete or choose a different name.', 'photolab' ),
+				__( 'An album with this name is already being uploaded. Please wait for it to complete or choose a different name.', 'todot-photolab' ),
 				array( 'status' => 409 )
 			);
 		}
@@ -284,7 +284,7 @@ class Upload_Controller extends \WP_REST_Controller {
 				);
 				return new \WP_Error(
 					'forbidden',
-					__( 'You do not have permission to access this album.', 'photolab' ),
+					__( 'You do not have permission to access this album.', 'todot-photolab' ),
 					array( 'status' => 403 )
 				);
 			}
@@ -309,7 +309,7 @@ class Upload_Controller extends \WP_REST_Controller {
 				);
 				return new \WP_Error(
 					'album_uploading',
-					__( 'Album is not in idle state, please try again later.', 'photolab' ),
+					__( 'Album is not in idle state, please try again later.', 'todot-photolab' ),
 					array( 'status' => 409 )
 				);
 			}
@@ -336,7 +336,7 @@ class Upload_Controller extends \WP_REST_Controller {
 				);
 				return new \WP_Error(
 					'photolab_db_error',
-					__( 'Database error creating album.', 'photolab' ),
+					__( 'Database error creating album.', 'todot-photolab' ),
 					array( 'status' => 500 )
 				);
 			}
@@ -413,7 +413,7 @@ class Upload_Controller extends \WP_REST_Controller {
 				$this->rollback_album( $album_id, $term_id, '', $context );
 				return new \WP_Error(
 					'photolab_watermark_snapshot',
-					__( 'Errore creazione snapshot watermark.', 'photolab' ),
+					__( 'Errore creazione snapshot watermark.', 'todot-photolab' ),
 					array( 'status' => 500 )
 				);
 			}
@@ -560,7 +560,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_invalid_job',
-				__( 'Invalid job ID.', 'photolab' ),
+				__( 'Invalid job ID.', 'todot-photolab' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -578,7 +578,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'forbidden',
-				__( 'You do not have permission to access this album.', 'photolab' ),
+				__( 'You do not have permission to access this album.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -603,7 +603,7 @@ class Upload_Controller extends \WP_REST_Controller {
 				'photolab_invalid_state',
 				sprintf(
 					/* translators: %s = current status */
-					__( 'Album in stato "%s", chunk rifiutato.', 'photolab' ),
+					__( 'Album in stato "%s", chunk rifiutato.', 'todot-photolab' ),
 					$album->status
 				),
 				array(
@@ -631,7 +631,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'album_locked',
-				__( 'This album is currently being processed on another server. Please wait a moment and try again.', 'photolab' ),
+				__( 'This album is currently being processed on another server. Please wait a moment and try again.', 'todot-photolab' ),
 				array( 'status' => 423 )
 			);
 		}
@@ -685,7 +685,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_term_mismatch',
-				__( 'Category ID does not match the album.', 'photolab' ),
+				__( 'Category ID does not match the album.', 'todot-photolab' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -708,7 +708,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			Logger::error( 'Upload_Controller::chunk() — nessun file ricevuto nel chunk.', $context );
 			return new \WP_Error(
 				'photolab_no_files',
-				__( 'No files received in chunk.', 'photolab' ),
+				__( 'No files received in chunk.', 'todot-photolab' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -949,7 +949,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_not_found',
-				__( 'Album not found.', 'photolab' ),
+				__( 'Album not found.', 'todot-photolab' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -967,7 +967,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'forbidden',
-				__( 'You do not have permission to access this album.', 'photolab' ),
+				__( 'You do not have permission to access this album.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -1045,7 +1045,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_invalid_job',
-				__( 'Invalid job ID.', 'photolab' ),
+				__( 'Invalid job ID.', 'todot-photolab' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -1062,7 +1062,7 @@ class Upload_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'forbidden',
-				__( 'You do not have permission to access this album.', 'photolab' ),
+				__( 'You do not have permission to access this album.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -1111,7 +1111,7 @@ class Upload_Controller extends \WP_REST_Controller {
 				'album_status' => $status,
 				'message'      => sprintf(
 					/* translators: %s = current album status */
-					__( 'Album already in "%s" state, complete is a no-op.', 'photolab' ),
+					__( 'Album already in "%s" state, complete is a no-op.', 'todot-photolab' ),
 					$status
 				),
 			),

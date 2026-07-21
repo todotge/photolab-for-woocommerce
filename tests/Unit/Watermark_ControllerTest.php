@@ -30,16 +30,28 @@ if ( ! function_exists( __NAMESPACE__ . '\wp_check_filetype_and_ext' ) ) {
 	}
 }
 
-if ( ! function_exists( __NAMESPACE__ . '\move_uploaded_file' ) ) {
-	function move_uploaded_file( string $from, string $to ): bool {
-		if ( ! file_exists( $from ) ) {
-			return false;
+if ( ! function_exists( __NAMESPACE__ . '\wp_handle_upload' ) ) {
+	function wp_handle_upload( array $file, array $overrides = array() ): array {
+		if ( ! file_exists( $file['tmp_name'] ) ) {
+			return array( 'error' => 'tmp_name missing' );
 		}
-		$dir = dirname( $to );
+
+		$base = $GLOBALS['_photolab_upload_dir_basedir'] ?? sys_get_temp_dir();
+		$dir  = $base . '/Photolab/assets';
 		if ( ! is_dir( $dir ) ) {
 			mkdir( $dir, 0755, true );
 		}
-		return copy( $from, $to );
+		$dest = $dir . '/watermark.png';
+
+		if ( ! copy( $file['tmp_name'], $dest ) ) {
+			return array( 'error' => 'copy failed' );
+		}
+
+		return array(
+			'file' => $dest,
+			'url'  => 'http://example.com/wp-content/uploads/Photolab/assets/watermark.png',
+			'type' => 'image/png',
+		);
 	}
 }
 
