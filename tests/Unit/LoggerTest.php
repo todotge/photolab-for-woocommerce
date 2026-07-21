@@ -109,12 +109,12 @@ class LoggerTest extends TestCase {
 	}
 
 	/**
-	 * Default source is 'photolab' when none is supplied.
+	 * Default source is 'todot-photolab' when none is supplied.
 	 */
 	public function test_default_source_is_photolab(): void {
 		Logger::info( 'no source' );
 		$logger = wc_get_logger();
-		$this->assertSame( 'photolab', $logger->logs[0]['context']['source'] );
+		$this->assertSame( 'todot-photolab', $logger->logs[0]['context']['source'] );
 	}
 
 	/**
@@ -189,6 +189,6 @@ class LoggerTest extends TestCase {
 		Logger::error( 'something broke' );
 
 		$this->assertSame( 'something broke', $fired['message'] );
-		$this->assertSame( 'photolab', $fired['context']['source'] );
+		$this->assertSame( 'todot-photolab', $fired['context']['source'] );
 	}
 }

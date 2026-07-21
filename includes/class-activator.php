@@ -56,10 +56,10 @@ class Activator {
 
 			// wp_die with back link so the user gets feedback in the browser.
 			wp_die(
-				'<strong>' . esc_html__( 'Photolab could not be activated:', 'photolab' ) . '</strong><br>' .
+				'<strong>' . esc_html__( 'Photolab could not be activated:', 'todot-photolab' ) . '</strong><br>' .
 				implode( '<br>', array_map( 'esc_html', $errors ) ) .
-				'<br><a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">&laquo; ' . esc_html__( 'Back to plugins', 'photolab' ) . '</a>',
-				esc_html__( 'Photolab — Missing requirements', 'photolab' ),
+				'<br><a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">&laquo; ' . esc_html__( 'Back to plugins', 'todot-photolab' ) . '</a>',
+				esc_html__( 'Photolab — Missing requirements', 'todot-photolab' ),
 				array( 'back_link' => false )
 			);
 		}

@@ -123,13 +123,13 @@ class AdminTestImagickHides extends TestCase {
 
 	public function test_enqueue_assets_on_photolab_page(): void {
 		$admin = new \Photolab\Admin();
-		$admin->enqueue_assets( 'toplevel_page_photolab' );
+		$admin->enqueue_assets( 'toplevel_page_todot-photolab' );
 		$this->assertTrue( true );
 	}
 
 	public function test_enqueue_assets_passes_chunk_size_param(): void {
 		$admin = new \Photolab\Admin();
-		$admin->enqueue_assets( 'toplevel_page_photolab' );
+		$admin->enqueue_assets( 'toplevel_page_todot-photolab' );
 		$this->assertTrue( true );
 	}
 

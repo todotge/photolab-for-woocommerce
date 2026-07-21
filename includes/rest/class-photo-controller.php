@@ -78,7 +78,7 @@ class Photo_Controller extends \WP_REST_Controller {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new \WP_Error(
 				'photolab_forbidden',
-				__( 'Access denied.', 'photolab' ),
+				__( 'Access denied.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -129,7 +129,7 @@ class Photo_Controller extends \WP_REST_Controller {
 		if ( $album_id <= 0 ) {
 			return new \WP_Error(
 				'photolab_invalid_album',
-				__( 'Invalid album ID.', 'photolab' ),
+				__( 'Invalid album ID.', 'todot-photolab' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -141,7 +141,7 @@ class Photo_Controller extends \WP_REST_Controller {
 		if ( null === $album ) {
 			return new \WP_Error(
 				'photolab_not_found',
-				__( 'Album not found.', 'photolab' ),
+				__( 'Album not found.', 'todot-photolab' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -158,7 +158,7 @@ class Photo_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'forbidden',
-				__( 'You do not have permission to access this album.', 'photolab' ),
+				__( 'You do not have permission to access this album.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -197,7 +197,7 @@ class Photo_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_db_error',
-				__( 'Errore database.', 'photolab' ),
+				__( 'Errore database.', 'todot-photolab' ),
 				array( 'status' => 500 )
 			);
 		}

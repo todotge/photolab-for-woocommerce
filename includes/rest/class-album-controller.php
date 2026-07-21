@@ -103,7 +103,7 @@ class Album_Controller extends \WP_REST_Controller {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new \WP_Error(
 				'photolab_forbidden',
-				__( 'Access denied.', 'photolab' ),
+				__( 'Access denied.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -175,7 +175,7 @@ class Album_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_db_error',
-				__( 'Database error while counting albums.', 'photolab' ),
+				__( 'Database error while counting albums.', 'todot-photolab' ),
 				array( 'status' => 500 )
 			);
 		}
@@ -211,7 +211,7 @@ class Album_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_db_error',
-				__( 'Database error while retrieving albums.', 'photolab' ),
+				__( 'Database error while retrieving albums.', 'todot-photolab' ),
 				array( 'status' => 500 )
 			);
 		}
@@ -304,7 +304,7 @@ class Album_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_not_found',
-				__( 'Album not found.', 'photolab' ),
+				__( 'Album not found.', 'todot-photolab' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -323,7 +323,7 @@ class Album_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'forbidden',
-				__( 'You do not have permission to access this album.', 'photolab' ),
+				__( 'You do not have permission to access this album.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -363,7 +363,7 @@ class Album_Controller extends \WP_REST_Controller {
 				'photolab_conflict',
 				sprintf(
 					/* translators: %s = current album status */
-					__( 'Album in stato "%s", impossibile eliminare adesso.', 'photolab' ),
+					__( 'Album in stato "%s", impossibile eliminare adesso.', 'todot-photolab' ),
 					$status
 				),
 				array(
@@ -497,7 +497,7 @@ class Album_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_db_error',
-				__( 'Database error while deleting photos.', 'photolab' ),
+				__( 'Database error while deleting photos.', 'todot-photolab' ),
 				array( 'status' => 500 )
 			);
 		}
@@ -514,7 +514,7 @@ class Album_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_db_error',
-				__( 'Database error while deleting album.', 'photolab' ),
+				__( 'Database error while deleting album.', 'todot-photolab' ),
 				array( 'status' => 500 )
 			);
 		}
@@ -589,7 +589,7 @@ class Album_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_not_found',
-				__( 'Album not found.', 'photolab' ),
+				__( 'Album not found.', 'todot-photolab' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -606,7 +606,7 @@ class Album_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'forbidden',
-				__( 'You do not have permission to access this album.', 'photolab' ),
+				__( 'You do not have permission to access this album.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -643,7 +643,7 @@ class Album_Controller extends \WP_REST_Controller {
 				'photolab_conflict',
 				sprintf(
 					/* translators: %s = current album status */
-					__( 'Album is in "%s" state, reset is not applicable.', 'photolab' ),
+					__( 'Album is in "%s" state, reset is not applicable.', 'todot-photolab' ),
 					$status
 				),
 				array(

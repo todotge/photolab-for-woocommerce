@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="grid grid-cols-[1fr_350px_auto] gap-x-4 items-end mb-5">
 					<div>
 						<label class="block text-[13px] font-normal text-gray-900 mb-2">
-							<?php esc_html_e( 'Name', 'photolab' ); ?>
+							<?php esc_html_e( 'Name', 'todot-photolab' ); ?>
 						</label>
 						<input
 							type="text"
@@ -62,7 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 					<div class="w-full">
 						<label class="block text-[13px] font-normal text-gray-900 mb-2">
-							<?php esc_html_e( 'Album expiration', 'photolab' ); ?>
+							<?php esc_html_e( 'Album expiration', 'todot-photolab' ); ?>
 						</label>
 						<input
 							type="date"
@@ -81,7 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<circle cx="12" cy="12" r="10" stroke-width="2"/>
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01"/>
 							</svg>
-							<?php esc_html_e( 'Watermark', 'photolab' ); ?>
+							<?php esc_html_e( 'Watermark', 'todot-photolab' ); ?>
 						</button>
 					</div>
 				</div>
@@ -90,7 +90,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="grid grid-cols-[110px_1fr_auto] gap-x-4 items-end">
 					<div>
 						<label class="block text-[13px] font-normal text-gray-900 mb-2">
-							<?php esc_html_e( 'Price', 'photolab' ); ?>
+							<?php esc_html_e( 'Price', 'todot-photolab' ); ?>
 						</label>
 						<input
 							type="number"
@@ -105,7 +105,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 					<div>
 						<label class="block text-[13px] font-normal text-gray-900 mb-2">
-							<?php esc_html_e( 'Select photos', 'photolab' ); ?>
+							<?php esc_html_e( 'Select photos', 'todot-photolab' ); ?>
 						</label>
 						<div class="flex items-center gap-2 h-[38px] border border-gray-300 rounded-md">
 							<label
@@ -132,7 +132,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
 							</svg>
-							<?php esc_html_e( 'Upload', 'photolab' ); ?>
+							<?php esc_html_e( 'Upload', 'todot-photolab' ); ?>
 						</button>
 					</div>
 				</div>
@@ -152,7 +152,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<section>
 		<div class="bg-white rounded-2xl border border-gray-200 p-6">
 			<h2 class="text-xl font-semibold text-gray-900 mb-6">
-				<?php esc_html_e( 'Galleries Status', 'photolab' ); ?>
+				<?php esc_html_e( 'Galleries Status', 'todot-photolab' ); ?>
 			</h2>
 
 			<div class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
@@ -160,11 +160,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<table class="w-full text-sm text-left border-collapse">
 						<thead class="text-[13px] font-medium text-gray-600 bg-gray-50 sticky top-0 border-b border-gray-200">
 							<tr>
-								<th class="px-6 py-3 font-medium"><?php esc_html_e( 'Album', 'photolab' ); ?></th>
-								<th class="px-6 py-3 font-medium"><?php esc_html_e( 'N. Photos', 'photolab' ); ?></th>
-								<th class="px-6 py-3 font-medium"><?php esc_html_e( 'Expiration', 'photolab' ); ?></th>
-								<th class="px-6 py-3 font-medium"><?php esc_html_e( 'Status', 'photolab' ); ?></th>
-								<th class="px-6 py-3 font-medium"><?php esc_html_e( 'Action', 'photolab' ); ?></th>
+								<th class="px-6 py-3 font-medium"><?php esc_html_e( 'Album', 'todot-photolab' ); ?></th>
+								<th class="px-6 py-3 font-medium"><?php esc_html_e( 'N. Photos', 'todot-photolab' ); ?></th>
+								<th class="px-6 py-3 font-medium"><?php esc_html_e( 'Expiration', 'todot-photolab' ); ?></th>
+								<th class="px-6 py-3 font-medium"><?php esc_html_e( 'Status', 'todot-photolab' ); ?></th>
+								<th class="px-6 py-3 font-medium"><?php esc_html_e( 'Action', 'todot-photolab' ); ?></th>
 							</tr>
 						</thead>
 						<tbody id="albumsTbody"></tbody>
@@ -179,7 +179,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					class="px-6 h-10 bg-[#d1d5db] text-gray-800 rounded-xl text-[14px] font-medium hover:bg-[#c4c8ce] transition flex items-center gap-2"
 					style="display:none"
 				>
-					<?php esc_html_e( 'Load More Galleries...', 'photolab' ); ?>
+					<?php esc_html_e( 'Load More Galleries...', 'todot-photolab' ); ?>
 				</button>
 			</div>
 		</div>
@@ -198,7 +198,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<div class="flex items-center justify-between p-6 border-b border-gray-200">
 				<h3 id="watermarkModalTitle" class="text-xl font-semibold text-gray-900">
-					<?php esc_html_e( 'Watermark settings', 'photolab' ); ?>
+					<?php esc_html_e( 'Watermark settings', 'todot-photolab' ); ?>
 				</h3>
 				<button
 					type="button"
@@ -215,12 +215,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<!-- State A: watermark exists → show preview -->
 				<div id="showWatermark" hidden>
 					<p class="text-[13px] text-gray-500 mb-3">
-						<?php esc_html_e( 'Current watermark:', 'photolab' ); ?>
+						<?php esc_html_e( 'Current watermark:', 'todot-photolab' ); ?>
 					</p>
 					<div class="rounded-lg overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center" style="min-height:120px;">
 						<img
 							id="watermarkPreview"
-							alt="<?php esc_attr_e( 'Watermark preview', 'photolab' ); ?>"
+							alt="<?php esc_attr_e( 'Watermark preview', 'todot-photolab' ); ?>"
 							style="max-width:100%; max-height:200px; background:repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0/20px 20px;"
 							class="rounded-lg"
 							src=""
@@ -231,7 +231,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<!-- State B: no watermark → upload form -->
 				<div id="uploadWatermark">
 					<label for="watermarkFile" class="block text-[13px] font-medium text-gray-900 mb-2">
-						<?php esc_html_e( 'Select a PNG file', 'photolab' ); ?>
+						<?php esc_html_e( 'Select a PNG file', 'todot-photolab' ); ?>
 					</label>
 					<input
 						class="w-full px-3 py-2 text-[13px] border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
@@ -241,23 +241,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 						accept="image/png"
 					>
 					<p class="text-[11px] text-gray-400 mt-1">
-						<?php esc_html_e( 'PNG only. Will be composited on every uploaded photo.', 'photolab' ); ?>
+						<?php esc_html_e( 'PNG only. Will be composited on every uploaded photo.', 'todot-photolab' ); ?>
 					</p>
 				</div>
 
 				<!-- Watermark position (always visible) -->
 				<div class="mt-4">
 					<p class="text-[13px] font-medium text-gray-900 mb-2">
-						<?php esc_html_e( 'Position', 'photolab' ); ?>
+						<?php esc_html_e( 'Position', 'todot-photolab' ); ?>
 					</p>
 					<div class="flex gap-4">
 						<label class="flex items-center gap-2 text-[13px] text-gray-700 cursor-pointer">
 							<input type="radio" name="watermarkPosition" id="watermarkPositionFullwidth" value="fullwidth" class="accent-gray-800">
-							<?php esc_html_e( 'Full width', 'photolab' ); ?>
+							<?php esc_html_e( 'Full width', 'todot-photolab' ); ?>
 						</label>
 						<label class="flex items-center gap-2 text-[13px] text-gray-700 cursor-pointer">
 							<input type="radio" name="watermarkPosition" id="watermarkPositionBottomRight" value="bottom_right" class="accent-gray-800" checked>
-							<?php esc_html_e( 'Bottom right', 'photolab' ); ?>
+							<?php esc_html_e( 'Bottom right', 'todot-photolab' ); ?>
 						</label>
 					</div>
 				</div>
@@ -276,14 +276,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 					class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
 					data-pl="closeWatermarkModal"
 				>
-					<?php esc_html_e( 'Close', 'photolab' ); ?>
+					<?php esc_html_e( 'Close', 'todot-photolab' ); ?>
 				</button>
 				<button
 					type="button"
 					id="saveWatermarkButton"
 					class="px-4 py-2 text-sm font-medium text-white bg-[#0a1929] rounded-lg hover:bg-[#152535] transition"
 				>
-					<?php esc_html_e( 'Save', 'photolab' ); ?>
+					<?php esc_html_e( 'Save', 'todot-photolab' ); ?>
 				</button>
 				<button
 					type="button"
@@ -291,7 +291,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition"
 					hidden
 				>
-					<?php esc_html_e( 'Delete', 'photolab' ); ?>
+					<?php esc_html_e( 'Delete', 'todot-photolab' ); ?>
 				</button>
 			</div>
 
@@ -303,7 +303,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- ── Footer ──────────────────────────────────────────────────────── -->
 <div class="max-w-7xl mx-auto mt-6 flex items-center justify-between px-2">
 	<p class="text-[13px] text-gray-400">
-		<?php esc_html_e( 'Made in Tenerife', 'photolab' ); ?>
+		<?php esc_html_e( 'Made in Tenerife', 'todot-photolab' ); ?>
 	</p>
 	<div class="flex items-center gap-4">
 		<a
@@ -323,7 +323,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			rel="noopener noreferrer"
 			class="text-[13px] text-gray-400 hover:text-gray-600 transition"
 		>
-			<?php esc_html_e( 'Documentation', 'photolab' ); ?>
+			<?php esc_html_e( 'Documentation', 'todot-photolab' ); ?>
 		</a>
 	</div>
 </div>

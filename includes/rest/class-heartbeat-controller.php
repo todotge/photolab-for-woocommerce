@@ -77,7 +77,7 @@ class Heartbeat_Controller extends \WP_REST_Controller {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new \WP_Error(
 				'photolab_forbidden',
-				__( 'Access denied.', 'photolab' ),
+				__( 'Access denied.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -130,7 +130,7 @@ class Heartbeat_Controller extends \WP_REST_Controller {
 		if ( $job_id <= 0 ) {
 			return new \WP_Error(
 				'photolab_invalid_job',
-				__( 'Invalid job ID.', 'photolab' ),
+				__( 'Invalid job ID.', 'todot-photolab' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -167,7 +167,7 @@ class Heartbeat_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'photolab_db_error',
-				__( 'Errore aggiornamento heartbeat.', 'photolab' ),
+				__( 'Errore aggiornamento heartbeat.', 'todot-photolab' ),
 				array( 'status' => 500 )
 			);
 		}
@@ -189,7 +189,7 @@ class Heartbeat_Controller extends \WP_REST_Controller {
 		if ( null === $album ) {
 			return new \WP_Error(
 				'photolab_invalid_job',
-				__( 'Job not found.', 'photolab' ),
+				__( 'Job not found.', 'todot-photolab' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -206,7 +206,7 @@ class Heartbeat_Controller extends \WP_REST_Controller {
 			);
 			return new \WP_Error(
 				'forbidden',
-				__( 'You do not have permission to access this album.', 'photolab' ),
+				__( 'You do not have permission to access this album.', 'todot-photolab' ),
 				array( 'status' => 403 )
 			);
 		}
