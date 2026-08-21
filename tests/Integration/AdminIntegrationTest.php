@@ -48,13 +48,13 @@ class AdminIntegrationTest extends WP_UnitTestCase {
 		$has_css = false;
 		$has_js  = false;
 		foreach ( $styles_queue as $handle ) {
-			if ( str_contains( (string) $handle, 'todot-photolab' ) ) {
+			if ( str_contains( (string) $handle, 'photolab-admin' ) ) {
 				$has_css = true;
 				break;
 			}
 		}
 		foreach ( $scripts_queue as $handle ) {
-			if ( str_contains( (string) $handle, 'todot-photolab' ) ) {
+			if ( str_contains( (string) $handle, 'photolab-admin' ) ) {
 				$has_js = true;
 				break;
 			}
